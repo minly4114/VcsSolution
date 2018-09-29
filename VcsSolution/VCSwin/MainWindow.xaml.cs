@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DataAdapter.Inside;
 
 namespace VCSwin
 {
@@ -20,9 +21,28 @@ namespace VCSwin
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        StudentInfoPage studentInfoPage;
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void PickStudentClickEvent(object sender, RoutedEventArgs e)
+        {
+            studentInfoPage = new StudentInfoPage(StudentPicked);
+            studentInfoPage.Show();
+        }
+
+        private void LoadInfoClickEvent(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void StudentPicked(Student student)
+        {
+            // > Отобразить студента
         }
     }
 }
