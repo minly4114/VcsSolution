@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VCSwin"
         mc:Ignorable="d"
-        Title="VCS" Height="450" Width="800">
-    <TabControl HorizontalAlignment="Left" VerticalAlignment="Top" Height="450" Width="800">
+        Title="VCS" Height="456" Width="807">
+    <TabControl HorizontalAlignment="Left" VerticalAlignment="Top" Height="418" Width="800" Margin="0,0,-8,0">
         <TabItem Header="Посещаемость" Height="22" VerticalAlignment="Top">
             <Grid Background="White" Margin="0,0,0,28">
                 <GroupBox Header="Информация о студенте" HorizontalAlignment="Left" Height="125" VerticalAlignment="Top" Width="774" Margin="10,0,0,0" Background="White">
                     <Grid HorizontalAlignment="Left" Height="115" VerticalAlignment="Top" Width="764" Margin="0,0,-2,-12">
-                        <TextBox HorizontalAlignment="Left" TextAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="225" Margin="371,10,0,0"/>
-                        <Button Content="Выбор" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="601,10,0,0" Height="23" Click="PickStudentClickEvent"/>
+                        <TextBox Name="tbStudent" HorizontalAlignment="Left" TextAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="328" Margin="371,10,0,0"/>
+                        <Button Content="Выбор" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="704,10,0,0" Height="23" Click="PickStudentClickEvent"/>
                         <DatePicker HorizontalAlignment="Left" VerticalAlignment="Top" Margin="97,10,0,0" RenderTransformOrigin="0.225,0.583" Width="197"/>
                         <Label Content="Студент" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="313,7,0,0"/>
                         <Label Content="Дата занятия" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,8,0,0"/>
@@ -23,8 +23,8 @@
                         <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="197" Margin="97,66,0,0"/>
                     </Grid>
                 </GroupBox>
-                <GroupBox Header="Посещаемость" HorizontalAlignment="Left" Height="252" VerticalAlignment="Top" Width="774" Margin="10,130,0,0">
-                    <DataGrid HorizontalAlignment="Left" Height="232" VerticalAlignment="Top" Width="764" Margin="0,0,-2,-2"/>
+                <GroupBox Header="Посещаемость" HorizontalAlignment="Left" Height="256" VerticalAlignment="Top" Width="774" Margin="10,130,0,-26">
+                    <DataGrid HorizontalAlignment="Left" Height="232" VerticalAlignment="Top" Width="764" Margin="0,0,-2,0"/>
                 </GroupBox>
 
             </Grid>

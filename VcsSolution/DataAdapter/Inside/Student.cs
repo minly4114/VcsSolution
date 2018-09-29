@@ -18,12 +18,13 @@ namespace DataAdapter.Inside
         public string Group { get; }
 
 
-        public Student(string fName, string lName, bool? male, string group)
+        public Student(string fName, string lName, string pastName, bool? male, string group)
         {
             FirstName = fName;
             LastName = lName;
-            male = Male;
-            group = Group;
+            PastName = pastName;
+            Male = male;
+            Group = group;
 
             ValidateData();
         }
@@ -31,7 +32,10 @@ namespace DataAdapter.Inside
         /// <summary> Проверяем данного студента в БД </summary>
         private void ValidateData()
         {
-
+            DataValidator.ValidateFieldTextRequired(FirstName, "Имя");
+            DataValidator.ValidateFieldTextRequired(LastName, "Фамилия");
+            DataValidator.ValidateFieldText(PastName, "Отчество");
+            DataValidator.ValidateFieldTextAdvanced(Group, "Группа");
         }
     }
 }

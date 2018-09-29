@@ -13,7 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DataAdapter.Inside;
 using DataAdapter.Inside.Stubs;
+using DataAdapter.Exceptions;
 using VCSwin.DataObjects;
+using DataAdapter;
 
 namespace VCSwin
 {
@@ -33,31 +35,47 @@ namespace VCSwin
 
         private void SearchClickEvent(object sender, RoutedEventArgs e)
         {
-            var student = new StudentSearchObject
-            {
-                FirstName = tbFirstName.Text,
-                LastName = tbLastName.Text,
-                PastName = tbPastName.Text,
-                Group = cmbGroupName.Text
-            }.ValidateData();
+            //var student = new StudentSearchObject
+            //{
+            //    FirstName = tbFirstName.Text,
+            //    LastName = tbLastName.Text,
+            //    PastName = tbPastName.Text,
+            //    Group = cmbGroupName.Text
+            //}.ValidateData();
 
             // > Поиск в базе
 
             // > Создание объектов совпадений в List
-            
+
             // > FillDataGrid -> List
+            try
+            {
+                DataValidator.ValidateFieldTextRequired(tbFirstName.Text, "Имя");
+                DataValidator.ValidateFieldTextRequired(tbLastName.Text, "Фамилия");
+                DataValidator.ValidateFieldText(tbPastName.Text, "Отчество");
+                FillDataGrid(
+                    new List<Student>
+                    {
+                        StudentStub.GetStudent(tbFirstName.Text, tbLastName.Text, tbPastName.Text), // > Убрать заглушку
+                    }
+                );
+
+            }
+            catch (ValidationErrorException exception)
+            {
+                MessageBox.Show($"Поле '{exception.FieldName}' не заполнено!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }       
         }
 
-        private void FillDataGrid()
+        private void FillDataGrid(List<Student> students)
         {
-
+            grdSearchResults.ItemsSource = students;
         }
 
         private void DataGridPickStudentEvent(object sender, MouseButtonEventArgs e)
         {
-            // > Убрать заглушку
-            returnStudent.Invoke(StudentStub.GetStudent());
-            this.Close();
+            returnStudent.Invoke((Student)grdSearchResults.CurrentItem);
+            Close();
         }
     }
 }

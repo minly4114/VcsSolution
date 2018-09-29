@@ -5,20 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VCSwin"
         mc:Ignorable="d"
-        Title="Поиск студента" Height="317.179" Width="305.536">
-    <Grid HorizontalAlignment="Left" Height="284" VerticalAlignment="Top" Width="296">
+        Title="Поиск студента" Height="317.179" Width="331.536">
+    <Grid HorizontalAlignment="Left" Height="284" VerticalAlignment="Top" Width="322">
         <Label Content="Имя" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,6,0,0"/>
-        <TextBox Name="tbFirstName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="210" Margin="76,10,0,0"/>
+        <TextBox Name="tbFirstName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" Margin="76,10,0,0"/>
         <Label Content="Фамилия" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,34,0,0"/>
-        <TextBox Name="tbLastName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="210" Margin="76,38,0,0"/>
+        <TextBox Name="tbLastName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" Margin="76,38,0,0"/>
         <Label Content="Отчество" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,65,0,0"/>
-        <TextBox Name="tbPastName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="210" Margin="76,69,0,0"/>
+        <TextBox Name="tbPastName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" Margin="76,69,0,0"/>
         <Label Content="*" Foreground="Red" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="36,6,0,0" Width="17" Height="22"/>
         <Label Content="*" Foreground="Red" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="61,33,0,0" Width="15" Height="19"/>
         <Label Content="Группа" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,93,0,0"/>
-        <ComboBox Name="cmbGroupName" HorizontalAlignment="Left" VerticalAlignment="Top" Width="210" Margin="76,97,0,0"/>
-        <DataGrid Name="grdSearchResults" HorizontalAlignment="Left" Height="123" VerticalAlignment="Top" Width="276" Margin="10,151,0,0" MouseDoubleClick="DataGridPickStudentEvent"/>
-        <Button Content="Поиск" HorizontalAlignment="Left" VerticalAlignment="Top" Width="276" Margin="10,124,0,0" Click="SearchClickEvent"/>
+        <ComboBox Name="cmbGroupName" HorizontalAlignment="Left" VerticalAlignment="Top" Width="236" Margin="76,97,0,0"/>
+        <DataGrid Name="grdSearchResults" HorizontalAlignment="Left" Height="123" VerticalAlignment="Top" Width="302" Margin="10,151,0,0" MouseDoubleClick="DataGridPickStudentEvent"/>
+        <Button Content="Поиск" HorizontalAlignment="Left" VerticalAlignment="Top" Width="302" Margin="10,124,0,0" Click="SearchClickEvent"/>
 
     </Grid>
 

@@ -31,10 +31,10 @@ namespace VCSwin.DataObjects
 
         public StudentSearchObject ValidateData()
         {
-            DataValidator.ValidateFieldTextRequired(FirstName, "FirstName");
-            DataValidator.ValidateFieldTextRequired(LastName, "LastName");
-            DataValidator.ValidateFieldText(PastName, "PastName");
-            DataValidator.ValidateFieldTextAdvanced(Group, "Group");
+            DataValidator.ValidateFieldTextRequired(FirstName, "Имя");
+            DataValidator.ValidateFieldTextRequired(LastName, "Фамилия");
+            DataValidator.ValidateFieldText(PastName, "Отчество");
+            DataValidator.ValidateFieldTextAdvanced(Group, "Группа");
             return this;
         }
     }

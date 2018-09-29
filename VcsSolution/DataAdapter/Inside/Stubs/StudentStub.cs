@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataAdapter.Inside.Stubs
+﻿namespace DataAdapter.Inside.Stubs
 {
     public static class StudentStub
     {
         public static Student GetStudent()
         {
-            return new Student("FirstName", "LastName", true, "ИВБО-06-16");
+            return new Student("FirstName", "LastName", "PastName", true, "ИВБО-06-16");
+        }
+
+        public static Student GetStudent(string firstName, string lastName, string pastName)
+        {
+            return new Student(firstName, lastName, pastName, true, "ИВБО-06-16");
         }
     }
 }

@@ -23,6 +23,7 @@ namespace VCSwin
     {
 
         StudentInfoPage studentInfoPage;
+        Student student;
 
         public MainWindow()
         {
@@ -43,6 +44,8 @@ namespace VCSwin
         private void StudentPicked(Student student)
         {
             // > Отобразить студента
+            tbStudent.Text = $"{student.FirstName} {student.LastName} {student.PastName} | {student.Group}";
+            this.student = student;
         }
     }
 }
