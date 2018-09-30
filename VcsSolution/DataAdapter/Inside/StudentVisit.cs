@@ -18,9 +18,9 @@ namespace DataAdapter.Inside
 
         public string Classroom { get; }
 
-        public bool? Presense { get; }
+        public bool Presense { get; private set; }
 
-        public StudentVisit(string fName, string lName, string pName, string group, DateTime dt, string classroom, bool? presense)
+        public StudentVisit(string fName, string lName, string pName, string group, DateTime dt, string classroom, bool presense)
         {
             FirstName = fName;
             LastName = lName;
@@ -30,6 +30,11 @@ namespace DataAdapter.Inside
             Classroom = classroom;
             Presense = presense;
             ValidateData();
+        }
+
+        public void SetPresense(bool presense)
+        {
+            Presense = presense;
         }
 
         public void ValidateData()

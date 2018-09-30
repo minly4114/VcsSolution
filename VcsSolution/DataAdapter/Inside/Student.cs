@@ -13,12 +13,12 @@ namespace DataAdapter.Inside
         public string PastName { get; }
 
         /// <summary> true - is Man </summary>
-        public bool? Male { get; }
+        public bool Male { get; }
 
         public string Group { get; }
 
 
-        public Student(string fName, string lName, string pastName, bool? male, string group)
+        public Student(string fName, string lName, string pastName, bool male, string group)
         {
             FirstName = fName;
             LastName = lName;

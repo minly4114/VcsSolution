@@ -25,8 +25,10 @@ namespace VCSwin
     {
 
         StudentInfoPage studentInfoPage;
+        EditVisitPage editVisitPage;
         Student Student;
         List<StudentVisit> studentVisits;
+        int visitId;
 
         public MainWindow()
         {
@@ -75,6 +77,20 @@ namespace VCSwin
             // > Отобразить студента
             tbStudent.Text = $"{student.FirstName} {student.LastName} {student.PastName} | {student.Group}";
             Student = student;
+        }
+
+        private void ChangeVisitState(object sender, MouseButtonEventArgs e)
+        {
+            visitId = grdPresenseInfoTable.SelectedIndex;
+            editVisitPage = new EditVisitPage(studentVisits[visitId], ChangedVisitInfo);
+            editVisitPage.Show();
+        }
+
+        public void ChangedVisitInfo(StudentVisit studentVisit)
+        {
+            studentVisits[visitId] = studentVisit;
+            grdPresenseInfoTable.ItemsSource = null;
+            grdPresenseInfoTable.ItemsSource = studentVisits;
         }
     }
 }

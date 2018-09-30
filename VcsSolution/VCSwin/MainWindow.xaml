@@ -20,11 +20,11 @@
                         <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="197" Margin="97,39,0,0"/>
                         <Button Content="Загрузить" Margin="687,84,10,10" RenderTransformOrigin="0.507,-0.739" Click="LoadInfoClickEvent"/>
                         <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,62,0,0"/>
-                        <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="197" Margin="97,66,0,0"/>
+                        <ComboBox Name="cmbSubject" HorizontalAlignment="Left" VerticalAlignment="Top" Width="197" Margin="97,66,0,0"/>
                     </Grid>
                 </GroupBox>
                 <GroupBox Header="Посещаемость" HorizontalAlignment="Left" Height="256" VerticalAlignment="Top" Width="774" Margin="10,130,0,-26">
-                    <DataGrid Name="grdPresenseInfoTable" HorizontalAlignment="Left" Height="232" VerticalAlignment="Top" Width="764" Margin="0,0,-2,0"/>
+                    <DataGrid Name="grdPresenseInfoTable" HorizontalAlignment="Left" Height="232" VerticalAlignment="Top" Width="764" Margin="0,0,-2,0" MouseDoubleClick="ChangeVisitState"/>
                 </GroupBox>
 
             </Grid>

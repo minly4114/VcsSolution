@@ -1,0 +1,16 @@
+﻿<Window x:Class="VCSwin.EditVisitPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VCSwin"
+        mc:Ignorable="d"
+        Title="Посещение" Height="102.5" Width="161.94">
+    <Grid>
+        <ComboBox Name="cmbPresense" HorizontalAlignment="Left" VerticalAlignment="Top" Width="134" Margin="10,10,0,0" Height="25">
+            <TextBlock>Да</TextBlock>
+            <TextBlock>Нет</TextBlock>
+        </ComboBox>
+        <Button Content="Сохранить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="134" Margin="10,41,0,0" Click="SaveEvent"/>
+    </Grid>
+</Window>
