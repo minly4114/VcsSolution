@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DataAdapter.Inside;
+using DataAdapter.Inside.Stubs;
+using DataAdapter.Exceptions;
 
 namespace VCSwin
 {
@@ -23,7 +25,8 @@ namespace VCSwin
     {
 
         StudentInfoPage studentInfoPage;
-        Student student;
+        Student Student;
+        List<StudentVisit> studentVisits;
 
         public MainWindow()
         {
@@ -38,14 +41,40 @@ namespace VCSwin
 
         private void LoadInfoClickEvent(object sender, RoutedEventArgs e)
         {
-
+            studentVisits = new List<StudentVisit>();
+            try
+            {             
+                studentVisits.Add(PresenceLoadStub.GetStudentVisit(
+                    Student.FirstName,
+                    Student.LastName,
+                    Student.PastName,
+                    Student.Group,
+                    "DefaultClassroom",
+                    dpDate.DisplayDate,
+                    true));
+                studentVisits.Add(PresenceLoadStub.GetStudentVisit(
+                    Student.FirstName,
+                    Student.LastName,
+                    Student.PastName,
+                    Student.Group,
+                    "DefaultClassroom",
+                    dpDate.DisplayDate.AddHours(2),
+                    false));
+                grdPresenseInfoTable.ItemsSource = studentVisits;
+            } catch (NullReferenceException)
+            {
+                MessageBox.Show($"Не заполнено одно из обязательных полей!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            } catch (ValidationErrorException ex)
+            {
+                MessageBox.Show($"Ошибка валидации данных! Поле '{ex.FieldName}' {ex.ErrorMessage}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void StudentPicked(Student student)
         {
             // > Отобразить студента
             tbStudent.Text = $"{student.FirstName} {student.LastName} {student.PastName} | {student.Group}";
-            this.student = student;
+            Student = student;
         }
     }
 }

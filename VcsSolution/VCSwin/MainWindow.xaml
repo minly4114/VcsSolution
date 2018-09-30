@@ -13,7 +13,7 @@
                     <Grid HorizontalAlignment="Left" Height="115" VerticalAlignment="Top" Width="764" Margin="0,0,-2,-12">
                         <TextBox Name="tbStudent" HorizontalAlignment="Left" TextAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="328" Margin="371,10,0,0"/>
                         <Button Content="Выбор" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Margin="704,10,0,0" Height="23" Click="PickStudentClickEvent"/>
-                        <DatePicker HorizontalAlignment="Left" VerticalAlignment="Top" Margin="97,10,0,0" RenderTransformOrigin="0.225,0.583" Width="197"/>
+                        <DatePicker Name="dpDate" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="97,10,0,0" RenderTransformOrigin="0.225,0.583" Width="197"/>
                         <Label Content="Студент" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="313,7,0,0"/>
                         <Label Content="Дата занятия" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,8,0,0"/>
                         <Label Content="Аудитория" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,35,0,0"/>
@@ -24,7 +24,7 @@
                     </Grid>
                 </GroupBox>
                 <GroupBox Header="Посещаемость" HorizontalAlignment="Left" Height="256" VerticalAlignment="Top" Width="774" Margin="10,130,0,-26">
-                    <DataGrid HorizontalAlignment="Left" Height="232" VerticalAlignment="Top" Width="764" Margin="0,0,-2,0"/>
+                    <DataGrid Name="grdPresenseInfoTable" HorizontalAlignment="Left" Height="232" VerticalAlignment="Top" Width="764" Margin="0,0,-2,0"/>
                 </GroupBox>
 
             </Grid>

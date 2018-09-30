@@ -63,7 +63,7 @@ namespace VCSwin
             }
             catch (ValidationErrorException exception)
             {
-                MessageBox.Show($"Поле '{exception.FieldName}' не заполнено!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Поле '{exception.FieldName}' не заполнено! {exception.ErrorMessage}", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }       
         }
 

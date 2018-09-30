@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataAdapter.Inside
 {
-    public class Student
+    public class Student : IDataObject
     {
         public string FirstName { get;  }
 
@@ -30,7 +30,7 @@ namespace DataAdapter.Inside
         }
 
         /// <summary> Проверяем данного студента в БД </summary>
-        private void ValidateData()
+        public void ValidateData()
         {
             DataValidator.ValidateFieldTextRequired(FirstName, "Имя");
             DataValidator.ValidateFieldTextRequired(LastName, "Фамилия");

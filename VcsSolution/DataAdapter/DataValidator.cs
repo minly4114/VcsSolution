@@ -15,7 +15,7 @@ namespace DataAdapter
             for (int i = 0; i < 10; i++)
             {
                 if (data.Contains(i.ToString()))
-                    throw new ValidationErrorException(fieldName);
+                    throw new ValidationErrorException(fieldName, "Поле не может содержать цифры!");
             }
             if (data.Length == 0
                 || data.Contains(" ") 
@@ -32,12 +32,11 @@ namespace DataAdapter
                 || data.Contains("№")
                 || data.Contains("\"")
                 || data.Contains("!")
-                || data.Contains("-")
                 || data.Contains("_")
                 || data.Contains(",")
                 || data.Contains("."))
             {
-                throw new ValidationErrorException(fieldName);
+                throw new ValidationErrorException(fieldName, "Должны быть только буквы!");
             }
         }
 
@@ -51,7 +50,7 @@ namespace DataAdapter
             for (int i = 0; i < 10; i++)
             {
                 if (data.Contains(i.ToString()))
-                    throw new ValidationErrorException(fieldName);
+                    throw new ValidationErrorException(fieldName, "Поле не может содержать цифры!");
             }
             if (data.Contains("$")
                 || data.Contains("#")
@@ -66,12 +65,11 @@ namespace DataAdapter
                 || data.Contains("№")
                 || data.Contains("\"")
                 || data.Contains("!")
-                || data.Contains("-")
                 || data.Contains("_")
                 || data.Contains(",")
                 || data.Contains("."))
             {
-                throw new ValidationErrorException(fieldName);
+                throw new ValidationErrorException(fieldName, "Поле не может содержать символы $#%^&*();:№\\!-_,.");
             }
         }
 
@@ -98,7 +96,15 @@ namespace DataAdapter
                 || data.Contains(",")
                 || data.Contains("."))
             {
-                throw new ValidationErrorException(fieldName);
+                throw new ValidationErrorException(fieldName, "Поле не может содержать символы $#%^&*();:№\\!,.");
+            }
+        }
+
+        public static void ValidateDateTime(DateTime date, string fieldName)
+        {
+            if (date > DateTime.Now)
+            {
+                throw new ValidationErrorException(fieldName, "Дата больше текущей!");
             }
         }
     }
