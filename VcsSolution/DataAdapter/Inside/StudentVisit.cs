@@ -18,9 +18,11 @@ namespace DataAdapter.Inside
 
         public string Classroom { get; }
 
+        public string Subject { get; }
+
         public bool Presense { get; private set; }
 
-        public StudentVisit(string fName, string lName, string pName, string group, DateTime dt, string classroom, bool presense)
+        public StudentVisit(string fName, string lName, string pName, string group, DateTime dt, string classroom, string subject, bool presense)
         {
             FirstName = fName;
             LastName = lName;
@@ -29,6 +31,7 @@ namespace DataAdapter.Inside
             DateTime = dt;
             Classroom = classroom;
             Presense = presense;
+            Subject = subject;
             ValidateData();
         }
 
@@ -44,7 +47,8 @@ namespace DataAdapter.Inside
             DataValidator.ValidateFieldText(PastName, "Имя");
             DataValidator.ValidateFieldTextAdvanced(Group, "Группа");
             DataValidator.ValidateDateTime(DateTime, "Дата занятия");
-            DataValidator.ValidateFieldTextAdvanced(Classroom, "Группа");          
+            DataValidator.ValidateFieldTextAdvanced(Classroom, "Группа");
+            DataValidator.ValidateFieldTextAdvanced(Subject, "Предмет");
         }    
     }
 }

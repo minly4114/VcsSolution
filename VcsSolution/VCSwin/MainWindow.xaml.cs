@@ -52,6 +52,7 @@ namespace VCSwin
                     Student.PastName,
                     Student.Group,
                     "DefaultClassroom",
+                    "DefaultSubject",
                     dpDate.DisplayDate,
                     true));
                 studentVisits.Add(PresenceLoadStub.GetStudentVisit(
@@ -60,6 +61,7 @@ namespace VCSwin
                     Student.PastName,
                     Student.Group,
                     "DefaultClassroom",
+                    "DefaultSubject",
                     dpDate.DisplayDate.AddHours(2),
                     false));
                 grdPresenseInfoTable.ItemsSource = studentVisits;
