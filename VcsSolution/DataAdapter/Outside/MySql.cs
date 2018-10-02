@@ -8,6 +8,7 @@ namespace DataAdapter.Outside
     {
         public string GetObject(int from, int objectId)
         {
+            //Test change
             throw new NotImplementedException();
         }
         public string SendObject(int to, int objectId, object obj)
