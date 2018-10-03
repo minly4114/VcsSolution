@@ -4,12 +4,12 @@
     {
         public static Student GetStudent()
         {
-            return new Student("FirstName", "LastName", "PastName", true, "ИВБО-06-16");
+            return new Student(-1, "FirstName", "LastName", "PastName", true, "ИВБО-06-16");
         }
 
         public static Student GetStudent(string firstName, string lastName, string pastName)
         {
-            return new Student(firstName, lastName, pastName, true, "ИВБО-06-16");
+            return new Student(-1, firstName, lastName, pastName, true, "ИВБО-06-16");
         }
     }
 }

@@ -6,6 +6,8 @@ namespace DataAdapter.Inside
 {
     public class StudentVisit : IDataObject
     {
+        public int Id { get; }
+
         public string FirstName { get; }
 
         public string LastName { get; }
@@ -22,8 +24,19 @@ namespace DataAdapter.Inside
 
         public bool Presense { get; private set; }
 
-        public StudentVisit(string fName, string lName, string pName, string group, DateTime dt, string classroom, string subject, bool presense)
+        /// <summary></summary>
+        /// <param name="id">Если нет -1</param>
+        /// <param name="fName"></param>
+        /// <param name="lName"></param>
+        /// <param name="pName"></param>
+        /// <param name="group"></param>
+        /// <param name="dt"></param>
+        /// <param name="classroom"></param>
+        /// <param name="subject"></param>
+        /// <param name="presense"></param>
+        public StudentVisit(int id, string fName, string lName, string pName, string group, DateTime dt, string classroom, string subject, bool presense)
         {
+            Id = id;
             FirstName = fName;
             LastName = lName;
             PastName = pName;
