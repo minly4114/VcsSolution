@@ -36,16 +36,23 @@ namespace DataAdapter.Outside
         }
         public List<Student> GetStudent(Student student)
         {
+            var students = new List<Student>();
             MySqlConnection conn = GetDBConnection();
             conn.Open();
             try
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = conn;
-                cmd.CommandText = StudentDBrequest(student);
+                string sql = StudentDBrequest(student);
+                cmd.CommandText = sql;
                 var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    students.Add(new Student((int)reader["idstudent"], (string)reader["firstname"], (string)reader["lastname"], (string)reader["pastname"],(bool) reader["male"], (string)reader["studentgroup"]));
+                }
+                //var s = reader["firstname"];
             }
-            catch(NullReferenceException)
+            catch (NullReferenceException)
             {
 
             }
@@ -55,7 +62,7 @@ namespace DataAdapter.Outside
                 conn.Dispose();
             }
             //#TODO
-                return new List<Student>();
+                return students;
         }
 
         // Func private
@@ -77,74 +84,74 @@ namespace DataAdapter.Outside
                 &&student.Group.Equals(null)
                 &&student.Id.Equals(0))
             {
-                request = $"SELECT * FROM vcsdb.visits " +
-                    $"WHERE firstname = {student.FirstName} " +
-                    $"AND lastname = {student.LastName}" +
-                    $"AND male = {male};";
+                request = $"SELECT * FROM vcsdb.students" +
+                    $"WHERE firstname = '{student.FirstName}' " +
+                    $"AND lastname = '{student.LastName}' " +
+                    $"AND male = '{male}' ;";
             }
             else if(student.PastName.Equals(null)
                 &&student.Id.Equals(0))
             {
-                request = $"SELECT * FROM vcsdb.visits " +
-                    $"WHERE firstname = {student.FirstName} " +
-                    $"AND lastname = {student.LastName} " +
-                    $"AND male = {male}" +
-                    $"AND group = {student.Group};";
+                request = $"SELECT * FROM vcsdb.students " +
+                    $"WHERE firstname = '{student.FirstName}' " +
+                    $"AND lastname = '{student.LastName}' " +
+                    $"AND male = '{male}' " +
+                    $"AND studentgroup = '{student.Group}' ;";
             }
             else if(student.Group.Equals(null)&&
                 student.Id.Equals(0))
             {
-                request = $"SELECT * FROM vcsdb.visits " +
-                    $"WHERE firstname = {student.FirstName} " +
-                    $"AND lastname = {student.LastName} " +
-                    $"AND male = {male}" +
-                    $"AND pastname = {student.PastName};";
+                request = $"SELECT * FROM vcsdb.students " +
+                    $"WHERE firstname = '{student.FirstName}' " +
+                    $"AND lastname = '{student.LastName}' " +
+                    $"AND male = '{male}' " +
+                    $"AND pastname = '{student.PastName}' ;";
             }
             else if(student.PastName.Equals(null)&&
                 student.Group.Equals(null))
             {
-                request = $"SELECT * FROM vcsdb.visits " +
-                    $"WHERE firstname = {student.FirstName} " +
-                    $"AND lastname = {student.LastName} " +
-                    $"AND male = {male}" +
-                    $"AND idstudent = {student.Id};";
+                request = $"SELECT * FROM vcsdb.students " +
+                    $"WHERE firstname = '{student.FirstName}' " +
+                    $"AND lastname = '{student.LastName}' " +
+                    $"AND male = '{male}' " +
+                    $"AND idstudent = '{student.Id}' ;";
             }
             else if(student.PastName.Equals(null))
             {
-                request = $"SELECT * FROM vcsdb.visits " +
-                    $"WHERE firstname = {student.FirstName} " +
-                    $"AND lastname = {student.LastName} " +
-                    $"AND male = {male}" +
-                    $"AND group = {student.Group} " +
-                    $"AND idstudent = {student.Id};";
+                request = $"SELECT * FROM vcsdb.students " +
+                    $"WHERE firstname = '{student.FirstName}' " +
+                    $"AND lastname = '{student.LastName}' " +
+                    $"AND male = '{male}' " +
+                    $"AND studentgroup = '{student.Group}' " +
+                    $"AND idstudent = '{student.Id}' ;";
             }
             else if(student.Group.Equals(null))
             {
-                request = $"SELECT * FROM vcsdb.visits " +
-                    $"WHERE firstname = {student.FirstName} " +
-                    $"AND lastname = {student.LastName} " +
-                    $"AND male = {male}" +
-                    $"AND pastname = {student.PastName} " +
-                    $"AND idstudent = {student.Id};";
+                request = $"SELECT * FROM vcsdb.students " +
+                    $"WHERE firstname = '{student.FirstName}' " +
+                    $"AND lastname = '{student.LastName}' " +
+                    $"AND male = '{male}' " +
+                    $"AND pastname = '{student.PastName}' " +
+                    $"AND idstudent = '{student.Id}' ;";
             }
             else if (student.Id.Equals(0))
             {
-                request = $"SELECT * FROM vcsdb.visits " +
-                    $"WHERE firstname = {student.FirstName} " +
-                    $"AND lastname = {student.LastName} " +
-                    $"AND male = {male}" +
-                    $"AND group = {student.Group} " +
-                    $"AND pastname = {student.PastName};";
+                request = $"SELECT * FROM vcsdb.students " +
+                    $"WHERE firstname = '{student.FirstName}' " +
+                    $"AND lastname = '{student.LastName}' " +
+                    $"AND male = '{male}' " +
+                    $"AND studentgroup = '{student.Group}' " +
+                    $"AND pastname = '{student.PastName}' ;";
             }
             else
             {
-                request = $"SELECT * FROM vcsdb.visits " +
-                    $"WHERE firstname = {student.FirstName} " +
-                    $"AND lastname = {student.LastName} " +
-                    $"AND male = {male}" +
-                    $"AND group = {student.Group}" +
-                    $"AND pastname = {student.PastName}" +
-                    $"AND idstudent = {student.Id};";
+                request = $"SELECT * FROM vcsdb.students " +
+                    $"WHERE firstname = '{student.FirstName}' " +
+                    $"AND lastname = '{student.LastName}' " +
+                    $"AND male = '{male}' " +
+                    $"AND studentgroup = '{student.Group}' " +
+                    $"AND pastname = '{student.PastName}' " +
+                    $"AND idstudent = '{student.Id}' ;";
             }
             return request;
         }

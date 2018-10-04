@@ -16,6 +16,7 @@ using DataAdapter.Inside.Stubs;
 using DataAdapter.Exceptions;
 using VCSwin.DataObjects;
 using DataAdapter;
+using DataAdapter.Outside;
 
 namespace VCSwin
 {
@@ -64,7 +65,8 @@ namespace VCSwin
             catch (ValidationErrorException exception)
             {
                 MessageBox.Show($"Поле '{exception.FieldName}' не заполнено! {exception.ErrorMessage}", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
-            }       
+            }
+            DownloadStudentFromDB(new Student(1, "Егор", "Петров", "Михайлович", false, "ИВБО-06-16"));
         }
 
         private void FillDataGrid(List<Student> students)
@@ -76,6 +78,12 @@ namespace VCSwin
         {
             returnStudent.Invoke((Student)grdSearchResults.CurrentItem);
             Close();
+        }
+        private void DownloadStudentFromDB(Student student)
+        {
+            MySql mysql = new MySql("127.0.0.1", 3306, "vcsdb","root","1234");
+            List<Student> students = mysql.GetStudent(student);
+
         }
     }
 }
