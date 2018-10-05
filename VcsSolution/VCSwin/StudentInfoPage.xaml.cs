@@ -55,14 +55,18 @@ namespace VCSwin
                 DataValidator.ValidateFieldTextRequired(tbFirstName.Text, "Имя");
                 DataValidator.ValidateFieldTextRequired(tbLastName.Text, "Фамилия");
                 DataValidator.ValidateFieldText(tbPastName.Text, "Отчество");
-                FillDataGrid(
-                    new List<Student>
-                    {
-                        StudentStub.GetStudent(tbFirstName.Text, tbLastName.Text, tbPastName.Text), // > Убрать заглушку
-                        
-            }
-                );
 
+                var sql = new MySql();
+                List<Student> listResult = sql.GetStudent(
+                    new Student(
+                        1,
+                        tbFirstName.Text,
+                        tbLastName.Text,
+                        "Михайлович",
+                        true,
+                        "ИВБО-06-16"));
+
+                FillDataGrid(listResult);
             }
             catch (ValidationErrorException exception)
             {
