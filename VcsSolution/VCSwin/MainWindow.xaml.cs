@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using DataAdapter.Inside;
 using DataAdapter.Inside.Stubs;
 using DataAdapter.Exceptions;
+using DataAdapter.Outside;
 
 namespace VCSwin
 {
@@ -72,6 +73,8 @@ namespace VCSwin
             {
                 MessageBox.Show($"Ошибка валидации данных! Поле '{ex.FieldName}' {ex.ErrorMessage}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            MySql mysql = new MySql();
+            mysql.GetStudentVisits(new StudentVisit(1,"Егор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018, 10, 05, 18, 00, 00), "А5", "Архитектура вычислительных машин и систем", true ));
         }
 
         private void StudentPicked(Student student)
