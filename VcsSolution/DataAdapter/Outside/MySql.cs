@@ -10,11 +10,12 @@ namespace DataAdapter.Outside
     {
 
         // Params
-        private string host;
-        private int port;
-        private string dataBase;
-        private string userName;
-        private string password;
+        private string host = "127.0.0.1";
+        private int port = 3306;
+        private string dataBase = "vcsdb";
+        private string userName = "root";
+        private string password = "1234";
+        public MySqlConnection conn;
 
         public string GetObject(int from, int objectId)
         {
@@ -26,43 +27,35 @@ namespace DataAdapter.Outside
         }
 
         // Func public
-        public MySql(string host, int port, string dataBase, string userName, string password)
+        public MySql()
         {
-            this.host = host;
-            this.port = port;
-            this.dataBase = dataBase;
-            this.userName = userName;
-            this.password = password;
+            conn = GetDBConnection();
         }
         public List<Student> GetStudent(Student student)
         {
             var students = new List<Student>();
-            MySqlConnection conn = GetDBConnection();
             conn.Open();
             try
             {
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = conn;
-                string sql = StudentDBrequest(student);
-                cmd.CommandText = sql;
+                cmd.CommandText = StudentDBrequest(student);
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     students.Add(new Student((int)reader["idstudent"], (string)reader["firstname"], (string)reader["lastname"], (string)reader["pastname"],(bool) reader["male"], (string)reader["studentgroup"]));
                 }
-                //var s = reader["firstname"];
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException ex)
             {
-
+                throw ex;
             }
             finally
             {
                 conn.Close();
                 conn.Dispose();
             }
-            //#TODO
-                return students;
+            return students;
         }
 
         // Func private
@@ -79,80 +72,23 @@ namespace DataAdapter.Outside
         {
             string request;
             var male = student.Male ? 1 : 0;
-
-            if(student.PastName.Equals(null)
-                &&student.Group.Equals(null)
-                &&student.Id.Equals(0))
-            {
-                request = $"SELECT * FROM vcsdb.students" +
+            request = "SELECT * FROM vcsdb.students " +
                     $"WHERE firstname = '{student.FirstName}' " +
                     $"AND lastname = '{student.LastName}' " +
-                    $"AND male = '{male}' ;";
-            }
-            else if(student.PastName.Equals(null)
-                &&student.Id.Equals(0))
+                    $"AND male = '{male}' ";
+            if(!student.PastName.Equals(null))
             {
-                request = $"SELECT * FROM vcsdb.students " +
-                    $"WHERE firstname = '{student.FirstName}' " +
-                    $"AND lastname = '{student.LastName}' " +
-                    $"AND male = '{male}' " +
-                    $"AND studentgroup = '{student.Group}' ;";
+                request += $"AND pastname = '{student.PastName}' ";
             }
-            else if(student.Group.Equals(null)&&
-                student.Id.Equals(0))
+            if(!student.Group.Equals(null))
             {
-                request = $"SELECT * FROM vcsdb.students " +
-                    $"WHERE firstname = '{student.FirstName}' " +
-                    $"AND lastname = '{student.LastName}' " +
-                    $"AND male = '{male}' " +
-                    $"AND pastname = '{student.PastName}' ;";
+                request += $"AND studentgroup = '{student.Group}' ";
             }
-            else if(student.PastName.Equals(null)&&
-                student.Group.Equals(null))
+            if(!student.Id.Equals(null))
             {
-                request = $"SELECT * FROM vcsdb.students " +
-                    $"WHERE firstname = '{student.FirstName}' " +
-                    $"AND lastname = '{student.LastName}' " +
-                    $"AND male = '{male}' " +
-                    $"AND idstudent = '{student.Id}' ;";
+                request += $"AND idstudent = '{student.Id}' ";
             }
-            else if(student.PastName.Equals(null))
-            {
-                request = $"SELECT * FROM vcsdb.students " +
-                    $"WHERE firstname = '{student.FirstName}' " +
-                    $"AND lastname = '{student.LastName}' " +
-                    $"AND male = '{male}' " +
-                    $"AND studentgroup = '{student.Group}' " +
-                    $"AND idstudent = '{student.Id}' ;";
-            }
-            else if(student.Group.Equals(null))
-            {
-                request = $"SELECT * FROM vcsdb.students " +
-                    $"WHERE firstname = '{student.FirstName}' " +
-                    $"AND lastname = '{student.LastName}' " +
-                    $"AND male = '{male}' " +
-                    $"AND pastname = '{student.PastName}' " +
-                    $"AND idstudent = '{student.Id}' ;";
-            }
-            else if (student.Id.Equals(0))
-            {
-                request = $"SELECT * FROM vcsdb.students " +
-                    $"WHERE firstname = '{student.FirstName}' " +
-                    $"AND lastname = '{student.LastName}' " +
-                    $"AND male = '{male}' " +
-                    $"AND studentgroup = '{student.Group}' " +
-                    $"AND pastname = '{student.PastName}' ;";
-            }
-            else
-            {
-                request = $"SELECT * FROM vcsdb.students " +
-                    $"WHERE firstname = '{student.FirstName}' " +
-                    $"AND lastname = '{student.LastName}' " +
-                    $"AND male = '{male}' " +
-                    $"AND studentgroup = '{student.Group}' " +
-                    $"AND pastname = '{student.PastName}' " +
-                    $"AND idstudent = '{student.Id}' ;";
-            }
+            request += ";"; 
             return request;
         }
 
