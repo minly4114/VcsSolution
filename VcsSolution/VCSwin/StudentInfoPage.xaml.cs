@@ -16,6 +16,7 @@ using DataAdapter.Inside.Stubs;
 using DataAdapter.Exceptions;
 using VCSwin.DataObjects;
 using DataAdapter;
+using DataAdapter.Outside;
 
 namespace VCSwin
 {
@@ -48,6 +49,7 @@ namespace VCSwin
             // > Создание объектов совпадений в List
 
             // > FillDataGrid -> List
+            
             try
             {
                 DataValidator.ValidateFieldTextRequired(tbFirstName.Text, "Имя");
@@ -57,14 +59,17 @@ namespace VCSwin
                     new List<Student>
                     {
                         StudentStub.GetStudent(tbFirstName.Text, tbLastName.Text, tbPastName.Text), // > Убрать заглушку
-                    }
+                        
+            }
                 );
 
             }
             catch (ValidationErrorException exception)
             {
                 MessageBox.Show($"Поле '{exception.FieldName}' не заполнено! {exception.ErrorMessage}", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
-            }       
+            }
+            //DownloadStudentFromDB(new Student(0, tbFirstName.Text, tbLastName.Text, tbPastName.Text, false, cmbGroupName.Text));
+            DownloadStudentFromDB(new Student(1, "Егор", "Петров", "Михайлович", true, "ИВБО-06-16"));
         }
 
         private void FillDataGrid(List<Student> students)
@@ -76,6 +81,12 @@ namespace VCSwin
         {
             returnStudent.Invoke((Student)grdSearchResults.CurrentItem);
             Close();
+        }
+        private void DownloadStudentFromDB(Student student)
+        {
+            MySql mysql = new MySql();
+            List<Student> students = mysql.GetStudent(student);
+
         }
     }
 }
