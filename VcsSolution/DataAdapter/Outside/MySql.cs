@@ -10,7 +10,7 @@ namespace DataAdapter.Outside
     {
 
         // Params
-        private string host = "127.0.0.1";
+        private string host = "192.168.1.72";
         private int port = 3306;
         private string dataBase = "vcsdb";
         private string userName = "root";
@@ -31,7 +31,7 @@ namespace DataAdapter.Outside
         {
             conn = GetDBConnection();
         }
-        public List<Student> GetStudent(Student student)
+        public List<Student> GetStudent(StudentSearchObject student)
         {
             var students = new List<Student>();
             conn.Open();
@@ -57,7 +57,7 @@ namespace DataAdapter.Outside
             }
             return students;
         }
-        public List<StudentVisit> GetStudentVisits(StudentVisit studentVisit)
+        public List<StudentVisit> GetStudentVisits(StudentVisitSearchObject studentVisit)
         {
             var studentVisits = new List<StudentVisit>();
             conn.Open();
@@ -95,7 +95,7 @@ namespace DataAdapter.Outside
 
             return conn;
         }
-        private String StudentsDbRequest(Student student)
+        private String StudentsDbRequest(StudentSearchObject student)
         {
             string request;
             var male = student.Male ? 1 : 0;
@@ -111,17 +111,12 @@ namespace DataAdapter.Outside
             {
                 request += $"AND studentgroup = '{student.Group}' ";
             }
-            if(!student.Id.Equals(null))
-            {
-                request += $"AND idstudent = '{student.Id}' ";
-            }
             request += ";"; 
             return request;
         }
-        private String StudentVisitsDbRequest(StudentVisit studentVisit)
+        private String StudentVisitsDbRequest(StudentVisitSearchObject studentVisit)
         {
             string request;
-            var presense = studentVisit.Presense ? 1 : 0;
             var datetime = $"{studentVisit.DateTime.Year}" +
                 $"-{studentVisit.DateTime.Month}" +
                 $"-{studentVisit.DateTime.Day}" +
@@ -129,25 +124,20 @@ namespace DataAdapter.Outside
                 $":{studentVisit.DateTime.Minute}" +
                 $":{studentVisit.DateTime.Second}";
             request = $"SELECT * FROM vcsdb.visits " +
-                $"WHERE firstname = '{studentVisit.FirstName}' " +
-                $"AND lastname = '{studentVisit.LastName}' " +
-                $"AND datetime = '{datetime}' " +
-                $"AND presense = '{presense}' ";
+                $"WHERE firstname = '{studentVisit.Student.FirstName}' " +
+                $"AND lastname = '{studentVisit.Student.LastName}' " +
+                $"AND datetime = '{datetime}' ";
             if(!studentVisit.Classroom.Equals(null))
             {
                 request += $"AND classroom = '{studentVisit.Classroom}' ";
             }
-            if(!studentVisit.Group.Equals(null))
+            if(!studentVisit.Student.Group.Equals(null))
             {
-                request += $"AND studentgroup = '{studentVisit.Group}' ";
+                request += $"AND studentgroup = '{studentVisit.Student.Group}' ";
             }
-            if(!studentVisit.Id.Equals(null))
+            if(!studentVisit.Student.PastName.Equals(null))
             {
-                request += $"AND idpresense = '{studentVisit.Id}' ";
-            }
-            if(!studentVisit.PastName.Equals(null))
-            {
-                request += $"AND pastname = '{studentVisit.PastName}' ";
+                request += $"AND pastname = '{studentVisit.Student.PastName}' ";
             }
             if(!studentVisit.Subject.Equals(null))
             {

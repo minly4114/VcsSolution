@@ -74,7 +74,7 @@ namespace VCSwin
                 MessageBox.Show($"Ошибка валидации данных! Поле '{ex.FieldName}' {ex.ErrorMessage}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             MySql mysql = new MySql();
-            mysql.GetStudentVisits(new StudentVisit(1,"Егор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018, 10, 05, 18, 00, 00), "А5", "Архитектура вычислительных машин и систем", true ));
+            mysql.GetStudentVisits(new StudentVisitSearchObject(new Student(1, "Егор", "Петров", "Михайлович", true, "ИВБО-06-16"), new DateTime(2018, 10, 05, 18, 00, 00), "А5", "Архитектура вычислительных машин и систем"));
         }
 
         private void StudentPicked(Student student)
