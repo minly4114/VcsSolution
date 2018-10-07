@@ -7,12 +7,12 @@
 
         public string LastName { get; }
 
-        public string PastName;
+        public string PastName { get; }
 
         /// <summary> true - is Man </summary>
         public bool Male { get; }
 
-        public string Group;
+        public string Group { get; }
 
         public StudentSearchObject(string firstName, string lastName, string pastName, bool male, string group)
         {

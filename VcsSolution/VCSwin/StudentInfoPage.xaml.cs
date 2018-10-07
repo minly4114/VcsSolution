@@ -58,8 +58,7 @@ namespace VCSwin
 
                 var sql = new MySql();
                 List<Student> listResult = sql.GetStudent(
-                    new Student(
-                        1,
+                    new DataAdapter.Inside.StudentSearchObject(
                         tbFirstName.Text,
                         tbLastName.Text,
                         "Михайлович",
@@ -73,7 +72,7 @@ namespace VCSwin
                 MessageBox.Show($"Поле '{exception.FieldName}' не заполнено! {exception.ErrorMessage}", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             //DownloadStudentFromDB(new Student(0, tbFirstName.Text, tbLastName.Text, tbPastName.Text, false, cmbGroupName.Text));
-            DownloadStudentFromDB(new Student(1, "Егор", "Петров", "Михайлович", true, "ИВБО-06-16"));
+            DownloadStudentFromDB(new DataAdapter.Inside.StudentSearchObject("Егор", "Петров", "Михайлович", true, "ИВБО-06-16"));
         }
 
         private void FillDataGrid(List<Student> students)
@@ -86,7 +85,7 @@ namespace VCSwin
             returnStudent.Invoke((Student)grdSearchResults.CurrentItem);
             Close();
         }
-        private void DownloadStudentFromDB(Student student)
+        private void DownloadStudentFromDB(DataAdapter.Inside.StudentSearchObject student)
         {
             MySql mysql = new MySql();
             List<Student> students = mysql.GetStudent(student);
