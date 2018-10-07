@@ -14,7 +14,6 @@ using System.Windows.Shapes;
 using DataAdapter.Inside;
 using DataAdapter.Inside.Stubs;
 using DataAdapter.Exceptions;
-using VCSwin.DataObjects;
 using DataAdapter;
 using DataAdapter.Outside;
 
@@ -34,36 +33,31 @@ namespace VCSwin
             this.returnStudent = returnStudent;
         }
 
+        private void InitCmbGroups()
+        {
+            
+        }
+
         private void SearchClickEvent(object sender, RoutedEventArgs e)
         {
-            //var student = new StudentSearchObject
-            //{
-            //    FirstName = tbFirstName.Text,
-            //    LastName = tbLastName.Text,
-            //    PastName = tbPastName.Text,
-            //    Group = cmbGroupName.Text
-            //}.ValidateData();
-
-            // > Поиск в базе
-
-            // > Создание объектов совпадений в List
-
-            // > FillDataGrid -> List
-            
             try
             {
                 DataValidator.ValidateFieldTextRequired(tbFirstName.Text, "Имя");
                 DataValidator.ValidateFieldTextRequired(tbLastName.Text, "Фамилия");
                 DataValidator.ValidateFieldText(tbPastName.Text, "Отчество");
-
+                if (cmbGroupName.Text.Length < 1)
+                {
+                    throw new ValidationErrorException("Группа", "Выберите группу!");
+                }
                 var sql = new MySql();
+
                 List<Student> listResult = sql.GetStudent(
-                    new DataAdapter.Inside.StudentSearchObject(
+                    new StudentSearchObject(
                         tbFirstName.Text,
                         tbLastName.Text,
-                        "Михайлович",
-                        true,
-                        "ИВБО-06-16"));
+                        tbPastName.Text.Length > 0 ? tbPastName.Text : null,
+                        (bool)rbMan.IsChecked,
+                        cmbGroupName.Text));
 
                 FillDataGrid(listResult);
             }
@@ -71,8 +65,6 @@ namespace VCSwin
             {
                 MessageBox.Show($"Поле '{exception.FieldName}' не заполнено! {exception.ErrorMessage}", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            //DownloadStudentFromDB(new Student(0, tbFirstName.Text, tbLastName.Text, tbPastName.Text, false, cmbGroupName.Text));
-            DownloadStudentFromDB(new DataAdapter.Inside.StudentSearchObject("Егор", "Петров", "Михайлович", true, "ИВБО-06-16"));
         }
 
         private void FillDataGrid(List<Student> students)
@@ -84,12 +76,6 @@ namespace VCSwin
         {
             returnStudent.Invoke((Student)grdSearchResults.CurrentItem);
             Close();
-        }
-        private void DownloadStudentFromDB(DataAdapter.Inside.StudentSearchObject student)
-        {
-            MySql mysql = new MySql();
-            List<Student> students = mysql.GetStudent(student);
-
         }
     }
 }

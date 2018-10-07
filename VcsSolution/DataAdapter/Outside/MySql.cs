@@ -6,7 +6,7 @@ using MySql.Data.MySqlClient;
 
 namespace DataAdapter.Outside
 {
-    public class MySql : OutsideAdapter
+    public class MySql
     {
 
         // Params
@@ -17,20 +17,12 @@ namespace DataAdapter.Outside
         private string password = "1234";
         public MySqlConnection conn;
 
-        public string GetObject(int from, int objectId)
-        {
-            throw new NotImplementedException();
-        }
-        public string SendObject(int to, int objectId, object obj)
-        {
-            throw new NotImplementedException();
-        }
-
         // Func public
         public MySql()
         {
             conn = GetDBConnection();
         }
+
         public List<Student> GetStudent(StudentSearchObject student)
         {
             var students = new List<Student>();
@@ -46,9 +38,9 @@ namespace DataAdapter.Outside
                     students.Add(new Student((int)reader["idstudent"], (string)reader["firstname"], (string)reader["lastname"], (string)reader["pastname"],(bool) reader["male"], (string)reader["studentgroup"]));
                 }
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
-                throw ex;
+                throw;
             }
             finally
             {
@@ -69,7 +61,7 @@ namespace DataAdapter.Outside
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    studentVisits.Add(new StudentVisit((int)reader["idpresense"], (string)reader["firstname"], (string)reader["lastname"], (string)reader["pastname"], (string)reader["studentgroup"], (DateTime)reader["datetime"], (string)reader["classroom"], (string)reader["subject"], (bool)reader["presense"]));
+                    studentVisits.Add(new StudentVisit((int)reader["idpresense"], (string)reader["firstname"], (string)reader["lastname"], (string)reader["pastname"], (string)reader["studentgroup"], (DateTime)reader["date"], (string)reader["classroom"], (string)reader["subject"], (bool)reader["presense"]));
                 }
             }
             catch (NullReferenceException)
@@ -103,11 +95,11 @@ namespace DataAdapter.Outside
                     $"WHERE firstname = '{student.FirstName}' " +
                     $"AND lastname = '{student.LastName}' " +
                     $"AND male = '{male}' ";
-            if(!student.PastName.Equals(null))
+            if(student.PastName != null)
             {
                 request += $"AND pastname = '{student.PastName}' ";
             }
-            if(!student.Group.Equals(null))
+            if(student.Group != null)
             {
                 request += $"AND studentgroup = '{student.Group}' ";
             }
@@ -117,40 +109,37 @@ namespace DataAdapter.Outside
         private String StudentVisitsDbRequest(StudentVisitSearchObject studentVisit)
         {
             string request;
-            var datetime = $"{studentVisit.DateTime.Year}" +
-                $"-{studentVisit.DateTime.Month}" +
-                $"-{studentVisit.DateTime.Day}" +
-                $" {studentVisit.DateTime.Hour}" +
-                $":{studentVisit.DateTime.Minute}" +
-                $":{studentVisit.DateTime.Second}";
+            var date = studentVisit.DateTime.ToString("yyyy-MM-dd");
             request = $"SELECT * FROM vcsdb.visits " +
                 $"WHERE firstname = '{studentVisit.Student.FirstName}' " +
                 $"AND lastname = '{studentVisit.Student.LastName}' " +
-                $"AND datetime = '{datetime}' ";
-            if(!studentVisit.Classroom.Equals(null))
+                $"AND date = '{date}' ";
+            if(studentVisit.Classroom != null)
             {
                 request += $"AND classroom = '{studentVisit.Classroom}' ";
             }
-            if(!studentVisit.Student.Group.Equals(null))
+            if(studentVisit.Student.Group != null)
             {
                 request += $"AND studentgroup = '{studentVisit.Student.Group}' ";
             }
-            if(!studentVisit.Student.PastName.Equals(null))
+            if(studentVisit.Student.PastName != null)
             {
                 request += $"AND pastname = '{studentVisit.Student.PastName}' ";
             }
-            if(!studentVisit.Subject.Equals(null))
+            if(studentVisit.Subject != null)
             {
                 request += $"AND subject = '{studentVisit.Subject}' ";
             }
             request += ";";
             return request;
         }
+
         private String SubjectsDbRequest()
         {
             string request = "SELECT * FROM vcsdb.subjects ;";
             return request;
         }
+
         private String ClassroomsDbRequest()
         {
             string request = "SELECT * FROM vcsdb.classrooms;";

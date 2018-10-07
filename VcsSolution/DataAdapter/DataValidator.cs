@@ -100,8 +100,12 @@ namespace DataAdapter
             }
         }
 
-        public static void ValidateDateTime(DateTime date, string fieldName)
+        public static void ValidateDateTime(DateTime? date, string fieldName)
         {
+            if(date == null)
+            {
+                throw new ValidationErrorException(fieldName, "Выберите дату занятия!");
+            }
             if (date > DateTime.Now)
             {
                 throw new ValidationErrorException(fieldName, "Дата больше текущей!");

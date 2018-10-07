@@ -16,6 +16,7 @@ using DataAdapter.Inside;
 using DataAdapter.Inside.Stubs;
 using DataAdapter.Exceptions;
 using DataAdapter.Outside;
+using DataAdapter;
 
 namespace VCSwin
 {
@@ -44,27 +45,28 @@ namespace VCSwin
 
         private void LoadInfoClickEvent(object sender, RoutedEventArgs e)
         {
-            studentVisits = new List<StudentVisit>();
             try
-            {             
-                studentVisits.Add(PresenceLoadStub.GetStudentVisit(
-                    Student.FirstName,
-                    Student.LastName,
-                    Student.PastName,
-                    Student.Group,
-                    "DefaultClassroom",
-                    "DefaultSubject",
-                    dpDate.DisplayDate,
-                    true));
-                studentVisits.Add(PresenceLoadStub.GetStudentVisit(
-                    Student.FirstName,
-                    Student.LastName,
-                    Student.PastName,
-                    Student.Group,
-                    "DefaultClassroom",
-                    "DefaultSubject",
-                    dpDate.DisplayDate.AddHours(2),
-                    false));
+            {
+                if (Student == null)
+                {
+                    throw new ValidationErrorException("Студент", "Выберите студента!");
+                }
+                if(cmbClassroom.Text.Length < 1)
+                {
+                    throw new ValidationErrorException("Аудитория", "Выберите аудиторию!");
+                }
+                if (cmbSubject.Text.Length < 1)
+                {
+                    throw new ValidationErrorException("Предмет", "Выберите предмет!");
+                }
+                DataValidator.ValidateDateTime(dpDate.SelectedDate, "Дата");
+
+                var sql = new MySql();
+                studentVisits = sql.GetStudentVisits(new StudentVisitSearchObject(
+                    Student,
+                    (DateTime)dpDate.SelectedDate,
+                    cmbClassroom.Text,
+                    cmbSubject.Text));
                 grdPresenseInfoTable.ItemsSource = studentVisits;
             } catch (NullReferenceException)
             {

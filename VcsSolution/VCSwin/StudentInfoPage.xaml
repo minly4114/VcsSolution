@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VCSwin"
         mc:Ignorable="d"
-        Title="Поиск студента" Height="317.179" Width="331.536">
-    <Grid HorizontalAlignment="Left" Height="284" VerticalAlignment="Top" Width="322">
+        Title="Поиск студента" Height="355.179" Width="331.536">
+    <Grid HorizontalAlignment="Left" Height="315" VerticalAlignment="Top" Width="322">
         <Label Content="Имя" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,6,0,0"/>
         <TextBox Name="tbFirstName" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="236" Margin="76,10,0,0"/>
         <Label Content="Фамилия" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,34,0,0"/>
@@ -16,9 +16,14 @@
         <Label Content="*" Foreground="Red" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="36,6,0,0" Width="17" Height="22"/>
         <Label Content="*" Foreground="Red" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="61,33,0,0" Width="15" Height="19"/>
         <Label Content="Группа" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,93,0,0"/>
-        <ComboBox Name="cmbGroupName" HorizontalAlignment="Left" VerticalAlignment="Top" Width="236" Margin="76,97,0,0"/>
-        <DataGrid Name="grdSearchResults" HorizontalAlignment="Left" Height="123" VerticalAlignment="Top" Width="302" Margin="10,151,0,0" MouseDoubleClick="DataGridPickStudentEvent"/>
-        <Button Content="Поиск" HorizontalAlignment="Left" VerticalAlignment="Top" Width="302" Margin="10,124,0,0" Click="SearchClickEvent"/>
+        <ComboBox Name="cmbGroupName" HorizontalAlignment="Left" VerticalAlignment="Top" Width="236" Margin="76,97,0,0">
+            <TextBlock TextWrapping="Wrap" Text="ИВБО-06-16"/>
+        </ComboBox>
+        <DataGrid Name="grdSearchResults" HorizontalAlignment="Left" Height="131" VerticalAlignment="Top" Width="302" Margin="10,174,0,0" MouseDoubleClick="DataGridPickStudentEvent"/>
+        <Button Content="Поиск" HorizontalAlignment="Left" VerticalAlignment="Top" Width="302" Margin="10,149,0,0" Click="SearchClickEvent"/>
+        <Label Content="Пол" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,119,0,0" Height="25"/>
+        <RadioButton Name="rbMan" Content="Мужской" IsChecked="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="75,125,0,0"/>
+        <RadioButton Name="rbWoman" Content="Женский" IsChecked="False"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="150,125,0,0"/>
 
     </Grid>
 

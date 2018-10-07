@@ -55,7 +55,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="DataObjects\StudentSearchObject.cs" />
     <Compile Include="EditVisitPage.xaml.cs">
       <DependentUpon>EditVisitPage.xaml</DependentUpon>
     </Compile>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2019
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAdapter", "DataAdapter\DataAdapter.csproj", "{A23DEF5E-E474-4BCE-A956-1D70C522EB41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAdapter", "DataAdapter\DataAdapter.csproj", "{A23DEF5E-E474-4BCE-A956-1D70C522EB41}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VCSweb", "VCSweb\VCSweb.csproj", "{BE70A73F-71C2-40BC-A371-0BB87DBD5315}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VRS", "VRS\VRS.csproj", "{77A06485-288E-4084-8077-797941AD028B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECB", "ECB\ECB.csproj", "{8756511A-388B-4833-8D39-99F85AE4A035}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{B671E60A-D8D4-4465-B46C-7A04932F305B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{8756511A-388B-4833-8D39-99F85AE4A035}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8756511A-388B-4833-8D39-99F85AE4A035}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8756511A-388B-4833-8D39-99F85AE4A035}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B671E60A-D8D4-4465-B46C-7A04932F305B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B671E60A-D8D4-4465-B46C-7A04932F305B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B671E60A-D8D4-4465-B46C-7A04932F305B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B671E60A-D8D4-4465-B46C-7A04932F305B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
