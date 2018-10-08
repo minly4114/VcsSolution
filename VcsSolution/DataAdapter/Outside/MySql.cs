@@ -10,7 +10,7 @@ namespace DataAdapter.Outside
     {
 
         // Params
-        private string host = "192.168.1.72";
+        private string host = "5.228.65.163";
         private int port = 3306;
         private string dataBase = "vcsdb";
         private string userName = "root";
