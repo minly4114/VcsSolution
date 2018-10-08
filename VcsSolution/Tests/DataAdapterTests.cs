@@ -1,9 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataAdapter.Outside;
 using DataAdapter.Inside;
 using DataAdapter.Exceptions;
-
 
 namespace Tests
 {
@@ -36,6 +34,7 @@ namespace Tests
         [TestMethod]
         public void MySql_GetStudent_Negative_2()
         {
+            bool isExeption = false;
             try
             {
                 var sql = new MySql();
@@ -43,7 +42,27 @@ namespace Tests
             } catch(ValidationErrorException ex)
             {
                 Assert.AreEqual("Имя", ex.FieldName);
+                isExeption = true;
             }
+            Assert.IsTrue(isExeption);
+        }
+
+        /// <summary> Негативный тест - Фамилия с запретными символами </summary>
+        [TestMethod]
+        public void MySql_GetStudent_Negative_3()
+        {
+            bool isExeption = false;
+            try
+            {
+                var sql = new MySql();
+                var result = sql.GetStudent(new StudentSearchObject("Егор", "Пе%тров", null, true, "ИВБО-06-16"));
+            }
+            catch (ValidationErrorException ex)
+            {
+                Assert.AreEqual("Фамилия", ex.FieldName);
+                isExeption = true;
+            }
+            Assert.IsTrue(isExeption);
         }
     }
 }
