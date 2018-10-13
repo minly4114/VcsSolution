@@ -35,6 +35,18 @@ namespace VCSwin
         public MainWindow()
         {
             InitializeComponent();
+            MySql mySql1 = new MySql();
+            var clasrooms = mySql1.GetClassrooms();
+            var subjects = mySql1.GetSubjects();
+            foreach(var c in clasrooms)
+            {
+                cmbClassroom.Items.Add(c);
+            }
+            foreach(var s in subjects)
+            {
+                cmbSubject.Items.Add(s);
+            }
+            
         }
 
         private void PickStudentClickEvent(object sender, RoutedEventArgs e)

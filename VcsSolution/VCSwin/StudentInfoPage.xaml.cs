@@ -31,6 +31,12 @@ namespace VCSwin
         {
             InitializeComponent();
             this.returnStudent = returnStudent;
+            var mySql1 = new MySql();
+            var groups = mySql1.GetStudentGroups();
+            foreach(var g in groups)
+            {
+                cmbGroupName.Items.Add(g);
+            }
         }
 
         private void InitCmbGroups()

@@ -76,6 +76,84 @@ namespace DataAdapter.Outside
 
             return studentVisits;
         }
+        public List<string> GetClassrooms()
+        {
+            var classrooms = new List<string>();
+            conn.Open();
+            try
+            {
+                var cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = ClassroomsDbRequest();
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    classrooms.Add((string)reader["classroom"]);
+                }
+            }
+            catch(NullReferenceException)
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+            }
+            return classrooms;
+        }
+        public List<string> GetSubjects()
+        {
+            var subjects = new List<string>();
+            conn.Open();
+            try
+            {
+                var cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = SubjectsDbRequest();
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    subjects.Add((string)reader["subject"]);
+                }
+            }
+            catch (NullReferenceException)
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+            }
+            return subjects;
+        }
+        public List<string> GetStudentGroups()
+        {
+            var groups = new List<string>();
+            conn.Open();
+            try
+            {
+                var cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = GroupDbRequest();
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    groups.Add((string)reader["studentgroup"]);
+                }
+            }
+            catch (NullReferenceException)
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+            }
+            return groups;
+        }
 
         // Func private
         private MySqlConnection GetDBConnection()
@@ -145,6 +223,10 @@ namespace DataAdapter.Outside
             string request = "SELECT * FROM vcsdb.classrooms;";
             return request;
         }
-
+        private string GroupDbRequest()
+        {
+            string request = "SELECT * FROM vcsdb.studentgroups;";
+            return request;
+        }
     }
 }

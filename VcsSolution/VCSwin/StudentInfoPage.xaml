@@ -16,9 +16,7 @@
         <Label Content="*" Foreground="Red" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="36,6,0,0" Width="17" Height="22"/>
         <Label Content="*" Foreground="Red" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="61,33,0,0" Width="15" Height="19"/>
         <Label Content="Группа" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,93,0,0"/>
-        <ComboBox Name="cmbGroupName" HorizontalAlignment="Left" VerticalAlignment="Top" Width="236" Margin="76,97,0,0">
-            <TextBlock TextWrapping="Wrap" Text="ИВБО-06-16"/>
-        </ComboBox>
+        <ComboBox Name="cmbGroupName" HorizontalAlignment="Left" VerticalAlignment="Top" Width="236" Margin="76,97,0,0"/>
         <DataGrid Name="grdSearchResults" HorizontalAlignment="Left" Height="131" VerticalAlignment="Top" Width="302" Margin="10,174,0,0" MouseDoubleClick="DataGridPickStudentEvent"/>
         <Button Content="Поиск" HorizontalAlignment="Left" VerticalAlignment="Top" Width="302" Margin="10,149,0,0" Click="SearchClickEvent"/>
         <Label Content="Пол" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,119,0,0" Height="25"/>
