@@ -110,6 +110,8 @@ namespace VCSwin
             studentVisits[visitId] = studentVisit;
             grdPresenseInfoTable.ItemsSource = null;
             grdPresenseInfoTable.ItemsSource = studentVisits;
+            MySql mySql = new MySql();
+            var result = mySql.SetStudentVisit(studentVisit);
         }
     }
 }

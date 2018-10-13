@@ -154,6 +154,29 @@ namespace DataAdapter.Outside
             }
             return groups;
         }
+        public bool SetStudentVisit(StudentVisit studentVisit)
+        {
+            bool success = true;
+            conn.Open();
+            try
+            {
+                var cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = StudentVisitsDBRequestSet(studentVisit);
+                var reader = cmd.ExecuteReader();
+            }
+            catch (NullReferenceException)
+            {
+                success = false;
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+            }
+            return success;
+        }
 
         // Func private
         private MySqlConnection GetDBConnection()
@@ -211,7 +234,23 @@ namespace DataAdapter.Outside
             request += ";";
             return request;
         }
-
+        private string StudentVisitsDBRequestSet(StudentVisit studentVisit)
+        {
+            string request;
+            var date = studentVisit.DateTime.ToString("yyyy-MM-dd");
+            var presense = studentVisit.Presense ? 1 : 0;
+            request = $"UPDATE vcsdb.visits " +
+                $"SET firstname = '{studentVisit.FirstName}' " +
+                $", lastname = '{studentVisit.LastName}' " +
+                $", pastname = '{studentVisit.PastName}' " +
+                $", date = '{date}' " +
+                $", classroom = '{studentVisit.Classroom}' " +
+                $", studentgroup = '{studentVisit.Group}' " +
+                $", subject = '{studentVisit.Subject}' " +
+                $", presense = '{presense}' " +
+                $"WHERE idpresense = '{studentVisit.Id}';";
+            return request;
+        }
         private String SubjectsDbRequest()
         {
             string request = "SELECT * FROM vcsdb.subjects ;";
