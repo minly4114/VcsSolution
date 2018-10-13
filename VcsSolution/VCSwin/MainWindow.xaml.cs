@@ -1,19 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using DataAdapter.Inside;
-using DataAdapter.Inside.Stubs;
 using DataAdapter.Exceptions;
 using DataAdapter.Outside;
 using DataAdapter;
@@ -46,7 +35,6 @@ namespace VCSwin
             {
                 cmbSubject.Items.Add(s);
             }
-            
         }
 
         private void PickStudentClickEvent(object sender, RoutedEventArgs e)
@@ -107,11 +95,44 @@ namespace VCSwin
 
         public void ChangedVisitInfo(StudentVisit studentVisit)
         {
-            studentVisits[visitId] = studentVisit;
-            grdPresenseInfoTable.ItemsSource = null;
-            grdPresenseInfoTable.ItemsSource = studentVisits;
             MySql mySql = new MySql();
             var result = mySql.SetStudentVisit(studentVisit);
+            if(!result)
+            {
+                MessageBox.Show("Ошибка при изменении значения!", "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            studentVisits[visitId] = studentVisit;
+            grdPresenseInfoTable.ItemsSource = null;
+            grdPresenseInfoTable.ItemsSource = studentVisits;         
+        }
+
+        /// <summary>
+        /// Метод для автотестов
+        /// </summary>
+        /// <param name="studentSearch">Студент</param>
+        /// <param name="date">Дата занятия</param>
+        /// <param name="classroom">Аудитория</param>
+        /// <param name="subject">Предмет</param>
+        /// <returns></returns>
+        public MainWindow FillPage(StudentSearchObject studentSearch, DateTime date, string classroom, string subject)
+        {
+            PickStudentClickEvent(null, null);
+            studentInfoPage.FillPage(studentSearch).PickFirstStudent();
+            dpDate.SelectedDate = date;
+            cmbClassroom.SelectedIndex = cmbClassroom.Items.IndexOf(classroom);
+            cmbSubject.SelectedIndex = cmbSubject.Items.IndexOf(subject);
+            return this;
+        }
+
+        /// <summary>
+        /// Метод для автотестов
+        /// </summary>
+        /// <returns></returns>
+        public MainWindow ClickSearch()
+        {
+            LoadInfoClickEvent(null, null);
+            return this;
         }
     }
 }

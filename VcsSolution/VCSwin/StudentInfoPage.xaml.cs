@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using DataAdapter.Inside;
-using DataAdapter.Inside.Stubs;
 using DataAdapter.Exceptions;
 using DataAdapter;
 using DataAdapter.Outside;
@@ -31,21 +21,34 @@ namespace VCSwin
         {
             InitializeComponent();
             this.returnStudent = returnStudent;
-            var mySql1 = new MySql();
-            var groups = mySql1.GetStudentGroups();
-            foreach(var g in groups)
+            LoadGroupList();           
+        }
+
+        private void LoadGroupList()
+        {
+            var mySql = new MySql();
+            var groups = mySql.GetStudentGroups();
+            if (groups.Count < 1)
+            {
+                var result = MessageBox.Show(
+                    "Ошибка при получении списка групп! Повторить запрос списка групп?",
+                    "Ошибка!",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Error);
+                if(result == MessageBoxResult.Yes)
+                {
+                    LoadGroupList();
+                }
+                return;
+            }
+            foreach (var g in groups)
             {
                 cmbGroupName.Items.Add(g);
             }
         }
 
-        private void InitCmbGroups()
-        {
-            
-        }
-
         private void SearchClickEvent(object sender, RoutedEventArgs e)
-        {
+        {          
             try
             {
                 DataValidator.ValidateFieldTextRequired(tbFirstName.Text, "Имя");
@@ -82,6 +85,34 @@ namespace VCSwin
         {
             returnStudent.Invoke((Student)grdSearchResults.CurrentItem);
             Close();
+        }
+
+        /// <summary>
+        /// Метод для автотестов
+        /// </summary>
+        /// <param name="studentSearch">Параметры студента</param>
+        /// <returns></returns>
+        public StudentInfoPage FillPage(StudentSearchObject studentSearch)
+        {
+            tbFirstName.Text = studentSearch.FirstName;
+            tbLastName.Text = studentSearch.LastName;
+            tbPastName.Text = studentSearch.PastName;
+            if (studentSearch.Male)
+                rbMan.IsChecked = true;
+            else
+                rbWoman.IsChecked = true;
+            cmbGroupName.SelectedIndex = cmbGroupName.Items.IndexOf(studentSearch.Group);
+            SearchClickEvent(this, null);
+            return this;
+        }
+
+        /// <summary>
+        /// Метод для автотеста
+        /// </summary>
+        public void PickFirstStudent()
+        {
+            grdSearchResults.CurrentItem = grdSearchResults.Items[0];
+            DataGridPickStudentEvent(null, null);
         }
     }
 }
