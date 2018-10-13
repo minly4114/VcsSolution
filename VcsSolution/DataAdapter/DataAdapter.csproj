@@ -5,9 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="External\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="MySql.Data">
-      <HintPath>C:\Program Files (x86)\MySQL\Connector NET 8.0\Assemblies\v4.5.2\MySql.Data.dll</HintPath>
+      <HintPath>$(ProjectDir)\External\MySql.Data.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="External\MySql.Data.dll">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
