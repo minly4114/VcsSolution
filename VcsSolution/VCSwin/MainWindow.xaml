@@ -17,16 +17,10 @@
                         <Label Content="Студент" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="313,7,0,0"/>
                         <Label Content="Дата занятия" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,8,0,0"/>
                         <Label Content="Аудитория" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,35,0,0"/>
-                        <ComboBox Name="cmbClassroom" HorizontalAlignment="Left" VerticalAlignment="Top" Width="197" Margin="97,39,0,0">
-                            <TextBlock TextWrapping="WrapWithOverflow" Text="А-15"/>
-                            <TextBlock TextWrapping="Wrap" Text="А-11"/>
-                        </ComboBox>
+                        <ComboBox Name="cmbClassroom" HorizontalAlignment="Left" VerticalAlignment="Top" Width="197" Margin="97,39,0,0"/>
                         <Button Content="Загрузить" Margin="687,84,10,10" RenderTransformOrigin="0.507,-0.739" Click="LoadInfoClickEvent"/>
                         <Label Content="Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,62,0,0"/>
-                        <ComboBox Name="cmbSubject" HorizontalAlignment="Left" VerticalAlignment="Top" Width="197" Margin="97,66,0,0">
-                            <TextBlock TextWrapping="WrapWithOverflow" Text="Дискретная математика"/>
-                            <TextBlock TextWrapping="Wrap" Text="Матлогика"/>
-                        </ComboBox>
+                        <ComboBox Name="cmbSubject" HorizontalAlignment="Left" VerticalAlignment="Top" Width="197" Margin="97,66,0,0"/>
                     </Grid>
                 </GroupBox>
                 <GroupBox Header="Посещаемость" HorizontalAlignment="Left" Height="256" VerticalAlignment="Top" Width="774" Margin="10,130,0,-26">
