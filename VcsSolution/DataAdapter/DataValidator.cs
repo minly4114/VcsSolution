@@ -6,7 +6,7 @@ namespace DataAdapter
     public static class DataValidator
     {
         /// <summary>
-        /// Валидация обязательных текстовых полей (Имя, Фамилия)
+        /// Валидация обязательных текстовых полей (Фамилия)
         /// </summary>
         /// <param name="data">Текст</param>
         /// <param name="fieldName">Название поля</param>
@@ -31,6 +31,44 @@ namespace DataAdapter
                 || data.Contains(":")
                 || data.Contains("№")
                 || data.Contains("\"")
+                || data.Contains("/")
+                || data.Contains("!")
+                || data.Contains("_")
+                || data.Contains(",")
+                || data.Contains("."))
+            {
+                throw new ValidationErrorException(fieldName, "Должны быть только буквы!");
+            }
+        }
+
+        /// <summary>
+        /// Валидация обязательных текстовых полей (Имя)
+        /// </summary>
+        /// <param name="data">Текст</param>
+        /// <param name="fieldName">Название поля</param>
+        public static void ValidateFieldTextName(string data, string fieldName)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if (data.Contains(i.ToString()))
+                    throw new ValidationErrorException(fieldName, "Поле не может содержать цифры!");
+            }
+            if (data.Length == 0
+                || data.Contains(" ")
+                || data.Contains("$")
+                || data.Contains("#")
+                || data.Contains("%")
+                || data.Contains("^")
+                || data.Contains("&")
+                || data.Contains("*")
+                || data.Contains("(")
+                || data.Contains(")")
+                || data.Contains(";")
+                || data.Contains(":")
+                || data.Contains("№")
+                || data.Contains("\"")
+                || data.Contains("/")
+                || data.Contains("-")
                 || data.Contains("!")
                 || data.Contains("_")
                 || data.Contains(",")
@@ -64,6 +102,7 @@ namespace DataAdapter
                 || data.Contains(":")
                 || data.Contains("№")
                 || data.Contains("\"")
+                || data.Contains("/")
                 || data.Contains("!")
                 || data.Contains("_")
                 || data.Contains(",")
@@ -92,6 +131,7 @@ namespace DataAdapter
                 || data.Contains(":")
                 || data.Contains("№")
                 || data.Contains("\"")
+                || data.Contains("/")
                 || data.Contains("!")
                 || data.Contains(",")
                 || data.Contains("."))
@@ -110,6 +150,11 @@ namespace DataAdapter
             {
                 throw new ValidationErrorException(fieldName, "Дата больше текущей!");
             }
+        }
+
+        public static void ThrowException(string fieldName, string message)
+        {
+            throw new ValidationErrorException(fieldName, message);
         }
     }
 }

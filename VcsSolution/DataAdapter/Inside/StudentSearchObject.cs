@@ -16,6 +16,13 @@
 
         public StudentSearchObject(string firstName, string lastName, string pastName, bool male, string group)
         {
+            if(firstName == null)
+            {
+                DataValidator.ThrowException("Имя", "Поле не заполнено!");
+            } else if (lastName == null)
+            {
+                DataValidator.ThrowException("Фамилия", "Поле не заполнено!");
+            }
             FirstName = firstName;
             LastName = lastName;
             Male = male;
@@ -29,7 +36,7 @@
 
         public void ValidateData()
         {
-            DataValidator.ValidateFieldTextRequired(FirstName, "Имя");
+            DataValidator.ValidateFieldTextName(FirstName, "Имя");
             DataValidator.ValidateFieldTextRequired(LastName, "Фамилия");
             if(PastName != null)
                 DataValidator.ValidateFieldText(PastName, "Отчество");
