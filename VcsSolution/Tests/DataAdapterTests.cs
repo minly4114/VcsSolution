@@ -19,6 +19,15 @@ namespace Tests
             Assert.AreEqual("Егор", result[0].FirstName);
         }
 
+
+        /// <summary> Тест - Поле Имя содержит "-" </summary>
+        [TestMethod]
+        public void MySql_GetStudent_1()
+        {
+            var sql = new MySql();
+            var result = sql.GetStudent(new StudentSearchObject("Егор-Артём", "Петров", null, true, "ИВБО-06-16"));
+        }
+
         /// <summary> Негативный тест - группа не указана </summary>
         [TestMethod]
         public void MySql_GetStudent_Negative()
@@ -83,23 +92,6 @@ namespace Tests
             Assert.IsTrue(isExeption);
         }
 
-        /// <summary> Негативный тест - Имя с запретными символами </summary>
-        [TestMethod]
-        public void MySql_GetStudent_Negative_5()
-        {
-            bool isExeption = false;
-            try
-            {
-                var sql = new MySql();
-                var result = sql.GetStudent(new StudentSearchObject("Егор-Артём", "Петров", null, true, "ИВБО-06-16"));
-            }
-            catch (ValidationErrorException ex)
-            {
-                Assert.AreEqual("Имя", ex.FieldName);
-                isExeption = true;
-            }
-            Assert.IsTrue(isExeption);
-        }
         /// <summary> Негативный тест - Фамилия с запретными символами </summary>
         [TestMethod]
         public void MySql_GetStudent_Negative_6()

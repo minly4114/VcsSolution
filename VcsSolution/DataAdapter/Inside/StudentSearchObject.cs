@@ -36,7 +36,7 @@
 
         public void ValidateData()
         {
-            DataValidator.ValidateFieldTextName(FirstName, "Имя");
+            DataValidator.ValidateFieldTextRequired(FirstName, "Имя");
             DataValidator.ValidateFieldTextRequired(LastName, "Фамилия");
             if(PastName != null)
                 DataValidator.ValidateFieldText(PastName, "Отчество");

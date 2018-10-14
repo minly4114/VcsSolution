@@ -55,7 +55,7 @@ namespace DataAdapter.Inside
 
         public void ValidateData()
         {
-            DataValidator.ValidateFieldTextName(FirstName, "Имя");
+            DataValidator.ValidateFieldTextRequired(FirstName, "Имя");
             DataValidator.ValidateFieldTextRequired(LastName, "Имя");
             DataValidator.ValidateFieldText(PastName, "Имя");
             DataValidator.ValidateFieldTextAdvanced(Group, "Группа");
