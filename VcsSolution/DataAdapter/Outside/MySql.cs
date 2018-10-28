@@ -294,17 +294,22 @@ namespace DataAdapter.Outside
         {
             string request;
             var date = studentVisit.DateTime.ToString("yyyy-MM-dd");
-            var presense = studentVisit.Presense ? 1 : 0;
-            request = $"UPDATE vcsdb.visits " +
-                $"SET firstname = '{studentVisit.FirstName}' " +
-                $", lastname = '{studentVisit.LastName}' " +
-                $", pastname = '{studentVisit.PastName}' " +
-                $", date = '{date}' " +
-                $", classroom = '{studentVisit.Classroom}' " +
-                $", studentgroup = '{studentVisit.Group}' " +
-                $", subject = '{studentVisit.Subject}' " +
-                $", presense = '{presense}' " +
-                $"WHERE idpresense = '{studentVisit.Id}';";
+            request = $"insert into vcsdb.visits (idstudent, date, idclassroom, idclass, presense, pairnumber) " +
+                $"value((select idstudent from vcsdb.students where firstname = '{studentVisit.FirstName}' and lastname = '{studentVisit.LastName}' and pastname = '{studentVisit.PastName}' )" +
+                $", '{date}'" +
+                $", (select idsubject from vcsdb.subjects where subject = '{studentVisit.Subject}')" +
+                $", (select idclass from vcsdb.shedule where idsubject = (select idsubject from vcsdb.subjects where subject = '{studentVisit.Subject}') and idclassroom = (select idclassroom from vcsdb.classrooms = '{studentVisit.Classroom}'))" +
+                $", '0', '1');";
+            //request = $"UPDATE vcsdb.visits " +
+            //    $"SET firstname = '{studentVisit.FirstName}' " +
+            //    $", lastname = '{studentVisit.LastName}' " +
+            //    $", pastname = '{studentVisit.PastName}' " +
+            //    $", date = '{date}' " +
+            //    $", classroom = '{studentVisit.Classroom}' " +
+            //    $", studentgroup = '{studentVisit.Group}' " +
+            //    $", subject = '{studentVisit.Subject}' " +
+            //    $", presense = '0' " +
+            //    $"WHERE idpresense = '{studentVisit.Id}';";
             return request;
         }
 
