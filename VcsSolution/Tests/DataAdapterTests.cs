@@ -143,6 +143,44 @@ namespace Tests
             }
             Assert.IsTrue(isExeption);
         }
+        /// <summary> Негативный тест - не указана фамилия </summary>
+        [TestMethod]
+        public void MySql_GetStudent_Negative_9()
+        {
+            bool isExeption = false;
+            var sql = new MySql();
+            try
+            {
+                var result = sql.GetStudent(new StudentSearchObject("Егор", null, null, true, "ИВБО-06-16"));
+            }
+            catch (ValidationErrorException ex)
+            {
+                Assert.AreEqual("Фамилия", ex.FieldName);
+                isExeption = true;
+            }
+            Assert.IsTrue(isExeption);
+        }
+
+        [TestMethod]
+        public void MySql_GetSubject()
+        {
+            var sql = new MySql();
+            var result = sql.GetSubjects();
+
+            Assert.IsTrue(result.Count > 0);
+            Assert.AreEqual("Алгебра и геометрия", result[0]);
+        }
+        [TestMethod]
+        public void mySql_GetClassrooms()
+        {
+            var sql = new MySql();
+            var result = sql.GetClassrooms();
+
+            Assert.IsTrue(result.Count > 0);
+            Assert.AreEqual("А-1", result[0]);
+        }
+       
     }
+
 
 }
