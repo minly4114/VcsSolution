@@ -11,6 +11,7 @@ namespace ARDIS
     public static class ArdisConsole
     {
         private static SerialPort port;
+        private static ArdisWorker worker;
         private static string portName = "COM3";
         private static int serialRate = 9600;
         private static Parity parity = Parity.None;
@@ -39,7 +40,17 @@ namespace ARDIS
 
         public static void WriteLog(string log)
         {
-            Console.WriteLine(log);
+            string s = "NOT ASSIGNED";
+            try
+            {  
+                s = log.Remove(log.Length - 1);
+                s = s.Remove(0, 1);
+                worker.Send(s, "1", "1", "1");                          
+                Console.WriteLine($"{s} | #SENDED#");
+            } catch(Exception err)
+            {
+                Console.WriteLine($"{s} | ###ERROR WHILE SENDING TO DATABASE### --{err.Message}--");
+            }
         }
 
         private static void WaitKey()
@@ -51,6 +62,7 @@ namespace ARDIS
         private static void AutoConfigure()
         {
             port = new SerialPort(portName, serialRate, parity, dataBits, stopBits);
+            worker = new ArdisWorker();
             Console.WriteLine("***Конфигурация выполнена успешно***\n" +
                 "Параметры:\n" +
                 $"-portName = {portName}\n" +

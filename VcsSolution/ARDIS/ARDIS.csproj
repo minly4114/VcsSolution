@@ -45,10 +45,17 @@
   <ItemGroup>
     <Compile Include="ArdisConsole.cs" />
     <Compile Include="ArdisSerialReader.cs" />
+    <Compile Include="ArdisWorker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataAdapter\DataAdapter.csproj">
+      <Project>{a23def5e-e474-4bce-a956-1d70c522eb41}</Project>
+      <Name>DataAdapter</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

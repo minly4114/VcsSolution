@@ -42,7 +42,6 @@ void loop() {
     rfid.uid.uidByte[1] != nuidPICC[1] || 
     rfid.uid.uidByte[2] != nuidPICC[2] || 
     rfid.uid.uidByte[3] != nuidPICC[3] ) {
-    Serial.println(F("-"));
 
     // Store NUID into nuidPICC array
     for (byte i = 0; i < 4; i++) {
@@ -55,7 +54,6 @@ void loop() {
     printDec(rfid.uid.uidByte, rfid.uid.size);
     Serial.println(); */
   }
-  else Serial.println(F("*"));
 
   // Halt PICC
   rfid.PICC_HaltA();

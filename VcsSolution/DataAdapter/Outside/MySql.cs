@@ -10,7 +10,7 @@ namespace DataAdapter.Outside
     {
 
         // Params
-        private string host = "5.228.65.163";
+        private string host = "37.204.31.67";
         private int port = 3306;
         private string dataBase = "vcsdb";
         private string userName = "root";
@@ -154,6 +154,8 @@ namespace DataAdapter.Outside
             }
             return groups;
         }
+        
+        // TODO: ЗАМЕНИТЬ НА СОЗДАНИЕ НОВОГО ПОСЕЩЕНИЯ с 0
         public bool SetStudentVisit(StudentVisit studentVisit)
         {
             bool success = true;
@@ -176,6 +178,60 @@ namespace DataAdapter.Outside
                 conn.Dispose();
             }
             return success;
+        }
+
+        public bool SetStudentVisitTrue(string studentId, DateTime dt, string pairNumber, string classroom, string subject)
+        {
+            bool success = true;
+            conn.Open();
+            try
+            {
+                var cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = StudentVisitsByIdDBRequestSet(studentId, dt, pairNumber, classroom, subject);
+                var qr  = cmd.ExecuteNonQuery();
+                if(qr < 1)
+                {
+                    throw new Exception("Не удалось отметить посещение");
+                }
+            }
+            catch (NullReferenceException)
+            {
+                success = false;
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+            }
+            return success;
+        }
+
+        public string GetStudentIdByCardNumber(string cardNumber)
+        {
+            conn.Open();
+            try
+            {
+                var cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = StudentByCardDbRequest(cardNumber);
+                var reader = cmd.ExecuteReader();
+                if(reader.Read())
+                {
+                    return reader.GetString(0);
+                }
+            }
+            catch (NullReferenceException)
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+                conn.Dispose();
+            }
+            return "";
         }
 
         // Func private
@@ -251,6 +307,29 @@ namespace DataAdapter.Outside
                 $"WHERE idpresense = '{studentVisit.Id}';";
             return request;
         }
+
+        private string StudentVisitsByIdDBRequestSet(string studentId, DateTime dt, string pairNumber, string idclassroom, string idclass)
+        {
+            string request;
+            var date = dt.ToString("yyyy-MM-dd");
+            request = $"UPDATE vcsdb.visits " +
+                $"SET presense = '1' " +
+                $"WHERE studentid = '{studentId}' " +
+                $"AND date = '{date}' " +
+                $"AND idclassroom = '{idclassroom}' " +
+                $"AND idclass = '{idclass}' " +
+                $"AND pairnumber = '{pairNumber}';";
+            return request;
+        }
+
+        private string StudentByCardDbRequest(string studentCard)
+        {
+            string request;
+            request = $"SELECT studentid FROM vcsdb.studentscards " +
+                $"WHERE cardnumber = '{studentCard}';";            
+            return request;
+        }
+
         private String SubjectsDbRequest()
         {
             string request = "SELECT * FROM vcsdb.subjects ;";
