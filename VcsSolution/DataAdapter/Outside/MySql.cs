@@ -363,7 +363,7 @@ namespace DataAdapter.Outside
         private string SetStudentVisitPresenseDBRequest(StudentVisit studentVisit)
         {
             string request;
-            var presense = studentVisit.Presense ? 0 : 1;
+            var presense = studentVisit.Presense ? 1 : 0;
             var date = studentVisit.DateTime.ToString("yyyy-MM-dd");
             request = $"UPDATE vcsdb.visits " +
                 $"SET presense = '{presense}' " +
