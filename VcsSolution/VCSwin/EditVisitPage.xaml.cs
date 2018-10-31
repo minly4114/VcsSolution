@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DataAdapter.Inside;
+using DataAdapter.Outside;
 using DataAdapter.Exceptions;
 
 namespace VCSwin
@@ -49,6 +50,7 @@ namespace VCSwin
             {
                 visit.SetPresense(false);
             }
+
             changedPresense.Invoke(visit);
             Close();
         }
