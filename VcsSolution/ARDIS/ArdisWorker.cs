@@ -27,7 +27,6 @@ namespace ARDIS
             }
             catch
             {
-
                 throw;
             }
         }

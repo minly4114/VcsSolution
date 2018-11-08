@@ -2,6 +2,7 @@
 using DataAdapter.Outside;
 using DataAdapter.Inside;
 using DataAdapter.Exceptions;
+using System;
 
 namespace Tests
 {
@@ -143,8 +144,41 @@ namespace Tests
             }
             Assert.IsTrue(isExeption);
         }
-        
-    }
 
+        // Положительный тест на получение данных визита
+        [TestMethod]
+        public void MySql_GetStudentVisit()
+        {
+            var sql = new MySql();
+            var result = sql.GetStudentVisits(new StudentVisitSearchObject(new Student(1, "Егор", "Петров", "Михайлович", true, "ИВБО-06-16"), new DateTime(2018, 10, 28), "А-1", "Английский язык"));
+            Assert.IsTrue(result.Count > 0);
+            Assert.AreEqual(10, result[0].Id);
+        }
+
+        [TestMethod]
+        public void MySql_SetStudentVisit()
+        {
+            var sql = new MySql();
+            var result = sql.SetStudentVisit(new StudentVisit(10, "Егор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018,10,28), "А-1", "Английский язык", true));
+            Assert.IsTrue(result);
+        }
+        [TestMethod]
+        public void MySql_SetStudentVisit2()
+        {
+            var sql = new MySql();
+            var result = sql.SetStudentVisit(new StudentVisit(10, "Егор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", false));
+            var result2 = sql.GetStudentVisits(new StudentVisitSearchObject(new Student(1, "Егор", "Петров", "Михайлович", true, "ИВБО-06-16"), new DateTime(2018, 10, 28), "А-1", "Английский язык"));
+            Assert.AreEqual(result2[0].Presense, false);
+        }
+        [TestMethod]
+        public void MySql_SetStudentVisit3()
+        {
+            var sql = new MySql();
+            var result = sql.SetStudentVisit(new StudentVisit(10, "Егор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", true));
+            var result2 = sql.GetStudentVisits(new StudentVisitSearchObject(new Student(1, "Егор", "Петров", "Михайлович", true, "ИВБО-06-16"), new DateTime(2018, 10, 28), "А-1", "Английский язык"));
+            Assert.AreEqual(result2[0].Presense, true);
+        }
+
+    }
 
 }
