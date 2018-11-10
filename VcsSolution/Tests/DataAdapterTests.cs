@@ -172,7 +172,7 @@ namespace Tests
         public void MySql_SetStudentVisit()
         {
             var sql = new MySql();
-            var result = sql.SetStudentVisit(new StudentVisit(10, "Егор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018,10,28), "А-1", "Английский язык", true));
+            var result = sql.SetStudentVisit(new StudentVisit(10, "Егор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018,10,28), "А-1", "Английский язык", false));
             Assert.IsTrue(result);
         }
         [TestMethod]
@@ -247,6 +247,51 @@ namespace Tests
             Assert.IsTrue(result.Count > 0);
             Assert.AreEqual("ИВБО-01-16", result[0]);
         }
-    }
 
+        //Негативный тест - неправильно введено какое-то значение 
+        [TestMethod]
+        public void MySql_GetStudentVisit_Negative_2()
+        {
+            var sql = new MySql();
+            var result = sql.GetStudentVisits(new StudentVisitSearchObject(new Student(1, "ЕЙор", "Петров", "Михайлович", true, "ИВБО-06-16"), new DateTime(2018, 10, 28), "А-1", "Английский язык"));
+            Assert.IsTrue(result.Count > 0);
+            Assert.AreEqual(10, result[0].Id);
+        }
+
+        //Негативный тест - имя содержит цифры
+        [TestMethod]
+        public void MySql_SetStudentVisit_Negative()
+        {
+            var sql = new MySql();
+            var result = sql.SetStudentVisit(new StudentVisit(10, "Ег3ор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", true));
+            Assert.IsTrue(result);
+        }
+
+        //Негативный тест - имя содержит латинские буквы
+        [TestMethod]
+        public void MySql_SetStudentVisit_Negative_2()
+        {
+            var sql = new MySql();
+            var result = sql.SetStudentVisit(new StudentVisit(10, "ЕгQор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", true));
+            Assert.IsTrue(result);
+        }
+        //Негативный тест - имя содержит символы
+        [TestMethod]
+        public void MySql_SetStudentVisit_Negative_3()
+        {
+            var sql = new MySql();
+            var result = sql.SetStudentVisit(new StudentVisit(10, "Ег%ор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", true));
+            Assert.IsTrue(result);
+        }
+        //Негативный тест - неправильно написана группа
+        [TestMethod]
+        public void MySql_SetStudentVisit_Negative_4()
+        {
+            var sql = new MySql();
+            var result = sql.SetStudentVisit(new StudentVisit(10, "Егор", "Петров", "Михайлович", "ИВБО-04-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", true));
+            Assert.IsTrue(result);
+        }
+    }
 }
+
+
