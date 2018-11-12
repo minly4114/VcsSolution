@@ -169,14 +169,14 @@ namespace Tests
         }
 
         [TestMethod]
-        public void MySql_SetStudentVisit()
+        public void MySql_SetStudentVisit_SetFalse()
         {
             var sql = new MySql();
             var result = sql.SetStudentVisit(new StudentVisit(10, "Егор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018,10,28), "А-1", "Английский язык", false));
             Assert.IsTrue(result);
         }
         [TestMethod]
-        public void MySql_SetStudentVisit2()
+        public void MySql_SetStudentVisit_SetAndGetFalse()
         {
             var sql = new MySql();
             var result = sql.SetStudentVisit(new StudentVisit(10, "Егор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", false));
@@ -184,7 +184,7 @@ namespace Tests
             Assert.AreEqual(result2[0].Presense, false);
         }
         [TestMethod]
-        public void MySql_SetStudentVisit3()
+        public void MySql_SetStudentVisit_SetAndGetTrue()
         {
             var sql = new MySql();
             var result = sql.SetStudentVisit(new StudentVisit(10, "Егор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", true));
@@ -194,7 +194,7 @@ namespace Tests
 
         /// <summary> Негативный тест - не указана фамилия </summary>
         [TestMethod]
-        public void MySql_GetStudent_Negative_9()
+        public void MySql_GetStudent_LastNameIsNull()
         {
             bool isExeption = false;
             var sql = new MySql();
