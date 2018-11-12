@@ -29,13 +29,14 @@ namespace DataAdapter.Inside
         /// <param name="group"></param>
         public Student(int id, string fName, string lName, string pastName, bool male, string group)
         {
-            Id = id;
-            FirstName = fName;
-            LastName = lName;
-            PastName = pastName;
-            Male = male;
-            Group = group;
-            ValidateData();
+                Id = id;
+                FirstName = fName;
+                LastName = lName;
+                PastName = pastName;
+                Male = male;
+                Group = group;
+
+                ValidateData();                
         }
 
         public void ValidateData()
