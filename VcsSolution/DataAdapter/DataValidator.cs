@@ -12,6 +12,10 @@ namespace DataAdapter
         /// <param name="fieldName">Название поля</param>
         public static void ValidateFieldTextRequired(string data, string fieldName)
         {
+            if (data == null)
+            {
+                throw new ValidationErrorException(fieldName, "Поле не заполнено!");
+            }
             for (int i = 0; i < 10; i++)
             {
                 if (data.Contains(i.ToString()))
@@ -48,6 +52,10 @@ namespace DataAdapter
         /// <param name="fieldName">Название поля</param>
         public static void ValidateFieldText(string data, string fieldName)
         {
+            if (data == null)
+            {
+                throw new ValidationErrorException(fieldName, "Поле не заполнено!");
+            }
             for (int i = 0; i < 10; i++)
             {
                 if (data.Contains(i.ToString()))
@@ -82,6 +90,10 @@ namespace DataAdapter
         /// <param name="fieldName">Название поля</param>
         public static void ValidateFieldTextAdvanced(string data, string fieldName)
         {
+            if(data == null)
+            {
+                throw new ValidationErrorException(fieldName, "Поле не заполнено!");
+            }
             if (data.Contains("$")
                 || data.Contains("#")
                 || data.Contains("%")

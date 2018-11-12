@@ -169,14 +169,14 @@ namespace Tests
         }
 
         [TestMethod]
-        public void MySql_SetStudentVisit()
+        public void MySql_SetStudentVisit_SetFalse()
         {
             var sql = new MySql();
             var result = sql.SetStudentVisit(new StudentVisit(10, "Егор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018,10,28), "А-1", "Английский язык", false));
             Assert.IsTrue(result);
         }
         [TestMethod]
-        public void MySql_SetStudentVisit2()
+        public void MySql_SetStudentVisit_SetAndGetFalse()
         {
             var sql = new MySql();
             var result = sql.SetStudentVisit(new StudentVisit(10, "Егор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", false));
@@ -184,7 +184,7 @@ namespace Tests
             Assert.AreEqual(result2[0].Presense, false);
         }
         [TestMethod]
-        public void MySql_SetStudentVisit3()
+        public void MySql_SetStudentVisit_SetAndGetTrue()
         {
             var sql = new MySql();
             var result = sql.SetStudentVisit(new StudentVisit(10, "Егор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", true));
@@ -194,7 +194,7 @@ namespace Tests
 
         /// <summary> Негативный тест - не указана фамилия </summary>
         [TestMethod]
-        public void MySql_GetStudent_Negative_9()
+        public void MySql_GetStudent_LastNameIsNull()
         {
             bool isExeption = false;
             var sql = new MySql();
@@ -250,46 +250,64 @@ namespace Tests
 
         //Негативный тест - неправильно введено какое-то значение 
         [TestMethod]
-        public void MySql_GetStudentVisit_Negative_2()
+        public void MySql_GetStudentVisit_WrongFirstName()
         {
             var sql = new MySql();
             var result = sql.GetStudentVisits(new StudentVisitSearchObject(new Student(1, "ЕЙор", "Петров", "Михайлович", true, "ИВБО-06-16"), new DateTime(2018, 10, 28), "А-1", "Английский язык"));
-            Assert.IsTrue(result.Count > 0);
-            Assert.AreEqual(10, result[0].Id);
+            Assert.IsTrue(result.Count < 1);
         }
 
         //Негативный тест - имя содержит цифры
         [TestMethod]
-        public void MySql_SetStudentVisit_Negative()
+        public void MySql_SetStudentVisit_NumbersInTheFirstName()
         {
+            bool isExseption = false;
             var sql = new MySql();
-            var result = sql.SetStudentVisit(new StudentVisit(10, "Ег3ор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", true));
-            Assert.IsTrue(result);
+            try
+            {
+                var result = sql.SetStudentVisit(new StudentVisit(10, "Ег3ор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", true));
+            }
+            catch(ValidationErrorException ex)
+            {
+                Assert.AreEqual("Имя", ex.FieldName);
+                isExseption = true;
+            }
+            Assert.IsTrue(isExseption);
         }
 
-        //Негативный тест - имя содержит латинские буквы
-        [TestMethod]
-        public void MySql_SetStudentVisit_Negative_2()
-        {
-            var sql = new MySql();
-            var result = sql.SetStudentVisit(new StudentVisit(10, "ЕгQор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", true));
-            Assert.IsTrue(result);
-        }
         //Негативный тест - имя содержит символы
         [TestMethod]
-        public void MySql_SetStudentVisit_Negative_3()
+        public void MySql_SetStudentVisit_FirstNameValidationError()
         {
+            bool isException = false;
             var sql = new MySql();
-            var result = sql.SetStudentVisit(new StudentVisit(10, "Ег%ор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", true));
-            Assert.IsTrue(result);
+            try
+            {
+                var result = sql.SetStudentVisit(new StudentVisit(10, "Ег%ор", "Петров", "Михайлович", "ИВБО-06-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", true));
+            }
+            catch(ValidationErrorException ex)
+            {
+                Assert.AreEqual("Имя", ex.FieldName);
+                isException = true;
+            }
+            Assert.IsTrue(isException);
         }
         //Негативный тест - неправильно написана группа
         [TestMethod]
-        public void MySql_SetStudentVisit_Negative_4()
+        public void MySql_SetStudentVisit_WrongGroup()
         {
+            bool isExseption = false;
             var sql = new MySql();
-            var result = sql.SetStudentVisit(new StudentVisit(10, "Егор", "Петров", "Михайлович", "ИВБО-04-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", true));
-            Assert.IsTrue(result);
+            try
+            {
+                var result = sql.SetStudentVisit(new StudentVisit(10, "Егор", "Петров", "Михайлович", "ИВБО-04-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", true));
+
+            }
+            catch(Exception ex)
+            {
+                isExseption = true;
+            }
+            Assert.IsTrue(isExseption);
         }
     }
 }

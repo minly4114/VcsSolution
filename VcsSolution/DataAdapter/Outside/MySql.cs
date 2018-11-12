@@ -217,7 +217,7 @@ namespace DataAdapter.Outside
                     throw new Exception("Не удалось отметить посещение");
                 }
             }
-            catch (NullReferenceException)
+            catch (Exception)
             {
                 success = false;
                 throw;
@@ -365,9 +365,16 @@ namespace DataAdapter.Outside
             string request;
             var presense = studentVisit.Presense ? 1 : 0;
             var date = studentVisit.DateTime.ToString("yyyy-MM-dd");
+            var selectIdStudent = $"select idstudent from vcsdb.students where firstname = '{studentVisit.FirstName}' and lastname = '{studentVisit.LastName}' and pastname = '{studentVisit.PastName}'";
+            var selectIdSubject = $"select idsubject from vcsdb.subjects where subject = '{studentVisit.Subject}'";
+            var selectIdClassroom = $"select idclassroom from vcsdb.classrooms where classroom = '{studentVisit.Classroom}'";
+            var selectIdStudentGroup = $"select idstudentgroup from vcsdb.studentgroups where studentgroup = '{studentVisit.Group}'";
+            var selectIdClass = $"select idclass from vcsdb.shedule where idsubject = ({selectIdSubject}) and idclassroom = ({selectIdClassroom}) and idstudentgroup = ({selectIdStudentGroup})";
+
             request = $"UPDATE vcsdb.visits " +
                 $"SET presense = '{presense}' " +
-                $"WHERE idpresense = '{studentVisit.Id}';";
+                $"WHERE idpresense = '{studentVisit.Id}' " +
+                $"AND idclass = ({selectIdClass});";
             return request;
         }
 

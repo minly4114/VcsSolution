@@ -20,10 +20,10 @@ namespace ARDIS
                 {
                     throw new Exception("Студент не найден в базе");
                 }
-                if(!sql.SetStudentVisitTrue(s, DateTime.Now, pairNumber, classroom, subject))
-                {
-                    throw new Exception("Неизвестная ошибка отметки посещения");
-                }          
+                //if(!sql.SetStudentVisitTrue(s, DateTime.Now, pairNumber, classroom, subject))
+                //{
+                //    throw new Exception("Неизвестная ошибка отметки посещения");
+                //}          
             }
             catch
             {
