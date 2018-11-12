@@ -303,7 +303,7 @@ namespace Tests
                 var result = sql.SetStudentVisit(new StudentVisit(10, "Егор", "Петров", "Михайлович", "ИВБО-04-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", true));
 
             }
-            catch(NullReferenceException ex)
+            catch(Exception ex)
             {
                 isExseption = true;
             }
