@@ -230,15 +230,6 @@ namespace Tests
         }
 
         [TestMethod]
-        public void MySql_GetStudentVisit_Negative()
-        {
-            var sql = new MySql();
-            var result = sql.GetStudentVisits(new StudentVisitSearchObject(new Student(1, "Егор", "Петров", "Михайлович", true, "ИВБО-06-16"), new DateTime(2018, 10, 28), "А-1", "Английский язык"));
-            Assert.IsTrue(result.Count > 0);
-            Assert.AreEqual(10, result[0].Id);
-        }
-
-        [TestMethod]
         public void MySql_GetStudentGroups()
         {
             var sql = new MySql();
@@ -302,9 +293,10 @@ namespace Tests
             {
                 var result = sql.SetStudentVisit(new StudentVisit(10, "Егор", "Петров", "Михайлович", "ИВБО-04-16", new DateTime(2018, 10, 28), "А-1", "Английский язык", true));
 
-            }
-            catch(Exception ex)
+            } 
+            catch (ValidationErrorException ex)
             {
+                Assert.AreEqual("Группа", ex.FieldName);
                 isExseption = true;
             }
             Assert.IsTrue(isExseption);
