@@ -11,7 +11,7 @@ namespace ARDIS
     {
         MySql sql = new MySql();
 
-        public void Send(string cardNumber, string pairNumber, string classroom, string subject)
+        public void Send(string cardNumber, string classroom)
         {
             try
             {

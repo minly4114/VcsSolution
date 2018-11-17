@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO.Ports;
 
 /// <summary>
@@ -12,11 +13,16 @@ namespace ARDIS
     {
         private static SerialPort port;
         private static ArdisWorker worker;
-        private static string portName = "COM3";
+        private static ArdisSerialReader ardisReader;
+        private static string portName = "COM7";
         private static int serialRate = 9600;
         private static Parity parity = Parity.None;
         private static int dataBits = 8;
         private static StopBits stopBits = StopBits.One;
+
+        private static bool waitCommand = false;
+        private static List<string> messageList = new List<string>();
+        private static int deviceId = 1;
 
         public static void Main()
         {
@@ -33,23 +39,115 @@ namespace ARDIS
                     Console.WriteLine($"\nОшибка! {err.Message}\n\n");
                 }
             }
-            var ardisReader = new ArdisSerialReader(port);
+            ardisReader = new ArdisSerialReader(port);
             var ardisTask = ardisReader.StartReadingAsync(new ArdisSerialReader.WriteLog(WriteLog));
-            WaitKey();
+            while(true)
+            {
+                Console.WriteLine("Press any key, for send messages...");
+                Console.ReadKey();
+                waitCommand = true;
+                Console.Write("Device Id: ");
+                string deviceId = Console.ReadLine();
+                Console.Write("Command: ");
+                string command = Console.ReadLine();
+                Console.Write("Value: ");
+                string value = Console.ReadLine();
+                waitCommand = false;
+
+                SendMessage($"|{deviceId}|{command}|{value}|");
+            }
+            
+        }
+
+        public static void SendMessage(string msg)
+        {
+            try
+            {        
+                ardisReader.SendMessage(msg);
+                Console.WriteLine($"{msg} | #SENDED#");
+            } catch(Exception err)
+            {
+                Console.WriteLine($"{msg} ###ERROR WHILE SENDING MESSAGE### ---{err.Message}---");
+            }
         }
 
         public static void WriteLog(string log)
         {
-            string s = "NOT ASSIGNED";
-            try
-            {  
-                s = log.Remove(log.Length - 1);
-                s = s.Remove(0, 1);
-                worker.Send(s, "1", "1", "1");                          
-                Console.WriteLine($"{s} | #SENDED#");
-            } catch(Exception err)
+            if(log == "?\r")
             {
-                Console.WriteLine($"{s} | ###ERROR WHILE SENDING TO DATABASE### --{err.Message}--");
+                Console.WriteLine("?");
+                ardisReader.SendMessage(deviceId.ToString());
+                Console.WriteLine(deviceId.ToString());
+                deviceId++;
+            } else if(log[0] == '|' || log[0] == '!')
+            {
+                Console.WriteLine(log);
+            } else if (!waitCommand)
+            {
+                string s = "NOT ASSIGNED";
+                try
+                {
+                    s = log.Remove(log.Length - 1);
+                    string classroom = "";
+                    string cardNumber = "";
+                    bool isCardNum = false;
+                    for(int i = 0; i < s.Length; i++)
+                    {
+                        if(s[i] != '|' && !isCardNum)
+                        {
+                            classroom += s[i];
+                        }
+                        else if(!isCardNum)
+                        {
+                            isCardNum = true;
+                        } else
+                        {
+                            cardNumber += s[i];
+                        }
+                    }
+                    worker.Send(cardNumber, classroom);
+                    Console.WriteLine($"{s}| #SENDED#");
+                }
+                catch (Exception err)
+                {
+                    Console.WriteLine($"{s}| ###ERROR WHILE SENDING TO DATABASE### --{err.Message}--");
+                }
+                foreach(string msg in messageList)
+                {
+                    Console.WriteLine(msg);
+                    messageList.Remove(msg);
+                }
+            } else
+            {
+                string s = "NOT ASSIGNED";
+                try
+                {
+                    s = log.Remove(log.Length - 1);
+                    string classroom = "";
+                    string cardNumber = "";
+                    bool isCardNum = false;
+                    for (int i = 0; i < s.Length; i++)
+                    {
+                        if (s[i] != '|' && !isCardNum)
+                        {
+                            classroom += s[i];
+                        }
+                        else if (!isCardNum)
+                        {
+                            isCardNum = true;
+                        }
+                        else
+                        {
+                            cardNumber += s[i];
+                        }
+                    }
+                    worker.Send(cardNumber, classroom);
+                    messageList.Add($"{s} | #SENDED#");                  
+                }
+                catch (Exception err)
+                {
+                    messageList.Add($"{s} | ###ERROR WHILE SENDING TO DATABASE### --{err.Message}--");
+                }
             }
         }
 
