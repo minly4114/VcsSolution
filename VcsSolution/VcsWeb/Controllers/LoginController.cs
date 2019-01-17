@@ -21,11 +21,13 @@ namespace VcsWeb.Controllers
 
 		public ActionResult Index(Account account)
 		{
-			int idaccount = mySql.CheckAccount(account.Login, account.Password);
+			account = mySql.CheckAccount(account.Login, account.Password);
+			List<Student> students = mySql.GetStudent(account.IdStudent);
+			ViewBag.FirstName = students[0].FirstName;
+			ViewBag.LastName = students[0].LastName;
 			ViewBag.Classrooms = mySql.GetClassrooms();
 			ViewBag.Subjects = mySql.GetSubjects();
 			ViewBag.TypeOFClass = mySql.GetTypeOfClass();
-			ViewBag.IdAccount = idaccount;
 			return View("~/Views/Login/Account.cshtml");
 		}
 
@@ -38,7 +40,7 @@ namespace VcsWeb.Controllers
 		[HttpPost]
 		public string Logining(Account account)
 		{
-			account.IdAccount = mySql.CheckAccount(account.Login, account.Password);
+			account = mySql.CheckAccount(account.Login, account.Password);
 			ViewBag.IdAccount = account.IdAccount;
 			return account.IdAccount.ToString();
 		}

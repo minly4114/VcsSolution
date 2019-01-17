@@ -10,7 +10,7 @@
 	<p>Ввведите дату занятия </p>
 	<p><input type="datetime-local" name="DateTime" /></p>
 	
-	<p><input type="submit"></p>
+	@*<p><input type="submit"></p>*@
 	<p>Выберите аудиторию :</p>
 	<select name="Classroom">
 		@foreach (string a in ViewBag.Classrooms)
@@ -32,6 +32,6 @@
 			<option value=t>@t</option>
 		}
 	</select>
-	<input type="submit" value="Отправить" />
+	<input type="submit" value="Поиск" />
 </form>
 

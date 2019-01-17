@@ -20,14 +20,14 @@ namespace DataAdapter.Inside
         public string Group { get; }
 
 
-        /// <summary></summary>
-        /// <param name="id">Если нет -1</param>
-        /// <param name="fName"></param>
-        /// <param name="lName"></param>
-        /// <param name="pastName"></param>
-        /// <param name="male"></param>
-        /// <param name="group"></param>
-        public Student(int id, string fName, string lName, string pastName, bool male, string group)
+		/// <summary></summary>
+		/// <param name="id">Если нет -1</param>
+		/// <param name="fName"></param>
+		/// <param name="lName"></param>
+		/// <param name="pastName"></param>
+		/// <param name="male"></param>
+		/// <param name="group"></param>
+		public Student(int id, string fName, string lName, string pastName, bool male, string group)
         {
                 Id = id;
                 FirstName = fName;

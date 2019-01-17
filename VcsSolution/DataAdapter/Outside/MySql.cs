@@ -301,9 +301,9 @@ namespace DataAdapter.Outside
             return "";
         }
 
-		public int CheckAccount(string Login, string Password)
+		public Account CheckAccount(string Login, string Password)
 		{
-			int account=0;
+			Account account = new Account();
 			conn.Open();
 			try
 			{
@@ -315,7 +315,12 @@ namespace DataAdapter.Outside
 				var reader = cmd.ExecuteReader();
 				while (reader.Read())
 				{
-					account = (int)reader["idaccount"];
+					account.IdAccount = (int)reader["idaccount"];
+					account.IdStudent = (int)reader["idstudent"];
+					account.Login = reader["login"].ToString();
+					account.Password = reader["password"].ToString();
+					account.Email = reader["email"].ToString();
+					account.Phone = reader["phone"].ToString();
 				}
 			}
 			catch (Exception)
@@ -330,12 +335,44 @@ namespace DataAdapter.Outside
 			return account;
 		}
 
-        // Func private
+		public List<Student> GetStudent(int StudentId)
+		{
+			List<Student> students = new List<Student>();
+			conn.Open();
+			try
+			{
+				var cmd = new MySqlCommand
+				{
+					Connection = conn,
+					CommandText = GetStudentByIdRequest(StudentId.ToString())
+				};
+				var reader = cmd.ExecuteReader();
+				while (reader.Read())
+				{
+					students.Add(new Student((int)reader["idstudent"], (string)reader["firstname"], (string)reader["lastname"], (string)reader["pastname"], (bool)reader["male"], reader["idstudentgroup"].ToString()));
+					//students.Add(new Student((int)reader["idstudent"], (string)reader["firstname"], (string)reader["lastname"], (string)reader["pastname"], (bool)reader["male"], (string)reader["idstudentgroup"]));
+				}
+			}
+			catch(Exception)
+			{
+				throw;
+			}
+			finally
+			{
+				conn.Close();
+				conn.Dispose();
+			}
+			return students;
+		}
+
+		// Func private
+		private String GetStudentByIdRequest(string StudentId)
+		{
+			return $"select* from vcsdb.students where idstudent='{StudentId}';";
+		}
 		private String CheckAccountDbRequest(string login, string password)
 		{
-			string request;
-			request = $"select * from vcsdb.accounts where login = '{login}' and password = '{password}';";
-			return request;
+			return $"select * from vcsdb.accounts where login = '{login}' and password = '{password}';"; ;
 		}
         private MySqlConnection GetDBConnection()
         {
