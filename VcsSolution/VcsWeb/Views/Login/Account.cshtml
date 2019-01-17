@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Account";
+}
+
+
+<form method="post" action="">
+	<input type="hidden" value="" name="IdAccaunt" />
+	<p>Здравствуйте, @ViewBag.FirstName @ViewBag.LastName</p>
+	<p>Ввведите дату занятия </p>
+	<p><input type="datetime-local" name="DateTime" /></p>
+	
+	<p><input type="submit"></p>
+	<p>Выберите аудиторию :</p>
+	<select name="Classroom">
+		@foreach (string a in ViewBag.Classrooms)
+		{
+			<option value=a>@a</option>
+		}
+	</select>
+	<p>Выберите предмет :</p>
+	<select name="Subject">
+		@foreach (string s in ViewBag.Subjects)
+		{
+			<option value=s>@s</option>
+		}
+	</select>
+	<p>Выберите тип занятия :</p>
+	<select name="TypeOfClass">
+		@foreach (string t in ViewBag.TypeOfClass)
+		{
+			<option value=t>@t</option>
+		}
+	</select>
+	<input type="submit" value="Отправить" />
+</form>
+

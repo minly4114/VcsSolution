@@ -10,11 +10,11 @@ namespace DataAdapter.Outside
     {
 
         // Params
-        private string host = "37.204.36.2";
-        private int port = 3306;
-        private string dataBase = "vcsdb";
-        private string userName = "root";
-        private string password = "1234";
+        private readonly string host = "37.204.36.2";
+        private readonly int port = 3306;
+        private readonly string dataBase = "vcsdb";
+        private readonly string userName = "root";
+        private readonly string password = "1234";
         public MySqlConnection conn;
 
         // Func public
@@ -33,10 +33,12 @@ namespace DataAdapter.Outside
             conn.Open();
             try
             {
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = conn;
-                cmd.CommandText = StudentsDbRequest(student);
-                var reader = cmd.ExecuteReader();
+				MySqlCommand cmd = new MySqlCommand
+				{
+					Connection = conn,
+					CommandText = StudentsDbRequest(student)
+				};
+				var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     students.Add(new Student((int)reader["idstudent"], (string)reader["firstname"], (string)reader["lastname"], (string)reader["pastname"],(bool) reader["male"], student.Group));
@@ -64,10 +66,12 @@ namespace DataAdapter.Outside
             conn.Open();
             try
             {
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = conn;
-                cmd.CommandText = StudentVisitsDbRequest(studentVisit);
-                var reader = cmd.ExecuteReader();
+				MySqlCommand cmd = new MySqlCommand
+				{
+					Connection = conn,
+					CommandText = StudentVisitsDbRequest(studentVisit)
+				};
+				var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     studentVisits.Add(new StudentVisit((int)reader["idpresense"], studentVisit.Student.FirstName, studentVisit.Student.LastName, studentVisit.Student.PastName, studentVisit.Student.Group, (DateTime)reader["date"], studentVisit.Classroom, studentVisit.Subject, (bool)reader["presense"], studentVisit.TypeOfClass));
@@ -91,10 +95,12 @@ namespace DataAdapter.Outside
             conn.Open();
             try
             {
-                var cmd = new MySqlCommand();
-                cmd.Connection = conn;
-                cmd.CommandText = ClassroomsDbRequest();
-                var reader = cmd.ExecuteReader();
+				var cmd = new MySqlCommand
+				{
+					Connection = conn,
+					CommandText = ClassroomsDbRequest()
+				};
+				var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     classrooms.Add((string)reader["classroom"]);
@@ -117,10 +123,12 @@ namespace DataAdapter.Outside
             conn.Open();
             try
             {
-                var cmd = new MySqlCommand();
-                cmd.Connection = conn;
-                cmd.CommandText = SubjectsDbRequest();
-                var reader = cmd.ExecuteReader();
+				var cmd = new MySqlCommand
+				{
+					Connection = conn,
+					CommandText = SubjectsDbRequest()
+				};
+				var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     subjects.Add((string)reader["subject"]);
@@ -147,10 +155,12 @@ namespace DataAdapter.Outside
             conn.Open();
             try
             {
-                var cmd = new MySqlCommand();
-                cmd.Connection = conn;
-                cmd.CommandText = GroupDbRequest();
-                var reader = cmd.ExecuteReader();
+				var cmd = new MySqlCommand
+				{
+					Connection = conn,
+					CommandText = GroupDbRequest()
+				};
+				var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     groups.Add((string)reader["studentgroup"]);
@@ -174,10 +184,12 @@ namespace DataAdapter.Outside
             conn.Open();
             try
             {
-                var cmd = new MySqlCommand();
-                cmd.Connection = conn;
-                cmd.CommandText = TypeOfClassDbRequest();
-                var reader = cmd.ExecuteReader();
+				var cmd = new MySqlCommand
+				{
+					Connection = conn,
+					CommandText = TypeOfClassDbRequest()
+				};
+				var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     groups.Add((string)reader["typeofclass"]);
@@ -207,10 +219,12 @@ namespace DataAdapter.Outside
             conn.Open();
             try
             {
-                var cmd = new MySqlCommand();
-                cmd.Connection = conn;
-                cmd.CommandText = NewStudentVisitsDBRequest(studentVisit);
-                var reader = cmd.ExecuteReader();
+				var cmd = new MySqlCommand
+				{
+					Connection = conn,
+					CommandText = NewStudentVisitsDBRequest(studentVisit)
+				};
+				var reader = cmd.ExecuteReader();
             }
             catch (NullReferenceException)
             {
@@ -235,10 +249,12 @@ namespace DataAdapter.Outside
             conn.Open();
             try
             {
-                var cmd = new MySqlCommand();
-                cmd.Connection = conn;
-                cmd.CommandText = SetStudentVisitPresenseDBRequest(studentVisit);
-                var qr  = cmd.ExecuteNonQuery();
+				var cmd = new MySqlCommand
+				{
+					Connection = conn,
+					CommandText = SetStudentVisitPresenseDBRequest(studentVisit)
+				};
+				var qr  = cmd.ExecuteNonQuery();
                 if(qr < 1)
                 {
                     throw new Exception("Не удалось отметить посещение");
@@ -262,10 +278,12 @@ namespace DataAdapter.Outside
             conn.Open();
             try
             {
-                var cmd = new MySqlCommand();
-                cmd.Connection = conn;
-                cmd.CommandText = StudentByCardDbRequest(cardNumber);
-                var reader = cmd.ExecuteReader();
+				var cmd = new MySqlCommand
+				{
+					Connection = conn,
+					CommandText = StudentByCardDbRequest(cardNumber)
+				};
+				var reader = cmd.ExecuteReader();
                 if(reader.Read())
                 {
                     return reader.GetString(0);
@@ -283,7 +301,42 @@ namespace DataAdapter.Outside
             return "";
         }
 
+		public int CheckAccount(string Login, string Password)
+		{
+			int account=0;
+			conn.Open();
+			try
+			{
+				var cmd = new MySqlCommand
+				{
+					Connection = conn,
+					CommandText = CheckAccountDbRequest(Login, Password)
+				};
+				var reader = cmd.ExecuteReader();
+				while (reader.Read())
+				{
+					account = (int)reader["idaccount"];
+				}
+			}
+			catch (Exception)
+			{
+				throw;
+			}
+			finally
+			{
+				conn.Close();
+				conn.Dispose();
+			}
+			return account;
+		}
+
         // Func private
+		private String CheckAccountDbRequest(string login, string password)
+		{
+			string request;
+			request = $"select * from vcsdb.accounts where login = '{login}' and password = '{password}';";
+			return request;
+		}
         private MySqlConnection GetDBConnection()
         {
             String connString = "Server=" + host + ";Database=" + dataBase

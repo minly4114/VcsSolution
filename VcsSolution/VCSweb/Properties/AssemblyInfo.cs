@@ -1,35 +1,34 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// Управление общими сведениями о сборке осуществляется следующим образом
-// набора атрибутов. Измените значения этих атрибутов для изменения сведений,
-// связанных с этой сборкой.
-[assembly: AssemblyTitle("VCSweb")]
+// General Information about an assembly is controlled through the following
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+[assembly: AssemblyTitle("VcsWeb")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("VCSweb")]
-[assembly: AssemblyCopyright("© , 2018")]
+[assembly: AssemblyProduct("VcsWeb")]
+[assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-// Установка значения False в параметре ComVisible делает типы в этой сборке невидимыми
-// для компонентов COM.  Если требуется обратиться к типу в этой сборке через
-// COM, задайте атрибуту ComVisible значение true для требуемого типа.
+// Setting ComVisible to false makes the types in this assembly not visible
+// to COM components.  If you need to access a type in this assembly from
+// COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-// Следующий GUID служит для ID библиотеки типов typelib, если этот проект видим для COM
-[assembly: Guid("5170d9e7-3d3e-4140-9790-22345cf4c347")]
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("c8572a6c-6569-41c3-9a7b-a982c6f3efb4")]
 
-// Сведения о версии сборки состоят из указанных ниже четырех значений:
+// Version information for an assembly consists of the following four values:
 //
-//      основной номер версии;
-//      Дополнительный номер версии
-//      номер сборки;
-//      редакция.
+//      Major Version
+//      Minor Version
+//      Build Number
+//      Revision
 //
-// Можно задать все значения или принять номер редакции и номер сборки по умолчанию,
-// используя "*", как показано ниже:
+// You can specify all the values or you can default the Revision and Build Numbers
+// by using the '*' as shown below:
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
