@@ -304,9 +304,10 @@ namespace DataAdapter.Outside
 		public Account CheckAccount(string Login, string Password)
 		{
 			Account account = new Account();
-			conn.Open();
+			
 			try
 			{
+				conn.Open();
 				var cmd = new MySqlCommand
 				{
 					Connection = conn,

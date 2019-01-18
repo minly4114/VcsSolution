@@ -11,6 +11,7 @@ namespace VcsWeb.Controllers
 	public class LoginController : Controller
 	{
 		MySql mySql = new MySql();
+		private Account _mainAccount;
 		// GET: Login
 		[HttpGet]
 		public ActionResult Index()
@@ -21,17 +22,38 @@ namespace VcsWeb.Controllers
 
 		public ActionResult Index(Account account)
 		{
-			account = mySql.CheckAccount(account.Login, account.Password);
-			List<Student> students = mySql.GetStudent(account.IdStudent);
-			ViewBag.FirstName = students[0].FirstName;
-			ViewBag.LastName = students[0].LastName;
-			ViewBag.Classrooms = mySql.GetClassrooms();
-			ViewBag.Subjects = mySql.GetSubjects();
-			ViewBag.TypeOFClass = mySql.GetTypeOfClass();
-			return View("~/Views/Login/Account.cshtml");
+			string view;
+			try
+			{
+				account = mySql.CheckAccount(account.Login, account.Password);
+				view = "~/Views/Login/Account.cshtml";
+				List<Student> students = mySql.GetStudent(account.IdStudent);
+				ViewBag.FirstName = students[0].FirstName;
+				ViewBag.LastName = students[0].LastName;
+				ViewBag.Classrooms = mySql.GetClassrooms();
+				ViewBag.Subjects = mySql.GetSubjects();
+				ViewBag.TypeOFClass = mySql.GetTypeOfClass();
+			}
+			catch(Exception)
+			{
+				view = "~/Views/Login/Error.cshtml";
+			}
+			_mainAccount = account;
+			return View(view);
 		}
-
 		[HttpGet]
+		public ActionResult Error()
+		{
+			return View();
+		}
+		[HttpPost]
+		public void Error(int i)
+		{
+			Index();
+		}
+	
+
+	[HttpGet]
 		public ActionResult Logining()
 		{
 			return View();
